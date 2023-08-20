@@ -1,10 +1,11 @@
 <template>
-  <ul class="list-field">
+  <ul class="grid-field">
     <li v-for="item in data"
       :key="item.key || item.label"
       :class="{ selected: item === selected }"
       @click="change(item)">
       <p>{{item.label}}</p>
+      <p>{{item.price}}</p>
     </li>
   </ul>
 </template>
@@ -25,18 +26,20 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.list-field
+.grid-field
   display flex
-  flex 1
-  overflow-x auto
+  flex-wrap wrap
   gap 10px
+  padding 10px
+  overflow-x auto
   &::-webkit-scrollbar
     display none
   li
     display flex
+    flex-direction column
     align-items center
     justify-content center
-    width 70px
+    width calc(50% - 5px)
     height 50px
     font-weight 500
     font-size .8em

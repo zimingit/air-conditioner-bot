@@ -1,5 +1,5 @@
 <template>
-  <h4 class="field-header" v-if="label" v-html="label"></h4>
+  <h4 v-bind="$attrs" class="field-header" v-if="label" v-html="label"></h4>
   <slot/>
 </template>
 

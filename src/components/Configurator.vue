@@ -1,11 +1,13 @@
 <template>
   <div class="configurator">
+    <Conditioner :selected="conditioner" @change="setConditioner"/>
     <Area :selected="selectedArea" @change="setArea"/>
     <Dismantling :value="useDismantling" @change="setUseDismantling"/>
   </div>
 </template>
 
 <script>
+import Conditioner from './Sections/Conditioner.vue'
 import Area from './Sections/Area.vue'
 import Dismantling from './Sections/Dismantling.vue'
 
@@ -15,6 +17,7 @@ export default {
   },
   data () {
     return {
+      conditioner: null,
       selectedArea: null,
       useDismantling: false
     }
@@ -22,6 +25,9 @@ export default {
   created () {
   },
   methods: {
+    setConditioner (conditioner) {
+      this.conditioner = conditioner
+    },
     setArea (area) {
       this.selectedArea = area
     },
@@ -30,6 +36,7 @@ export default {
     }
   },
   components: {
+    Conditioner,
     Area,
     Dismantling
   }
