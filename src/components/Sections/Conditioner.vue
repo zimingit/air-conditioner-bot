@@ -5,19 +5,29 @@
     <Accordion>
       <div v-if="showList">
         <ul class="conditioner-filter">
-          <li v-for="data in filters"
-            :key="data.label"
-            :class="{ selected: filter === data }"
-            @click="setFilter(data)">
-            {{data.label}}
+          <li v-for="label in filters"
+            :key="label"
+            :class="{ selected: filter === label }"
+            @click="setFilter(label)">
+            {{label}}
           </li>
         </ul>
 
-        <GridField 
-          class="conditioner-list"
-          :data="conditionersList"
-          :selected="selected"
-          @change="change"/>
+        <ul class="conditioners-grid">
+          <li v-for="conditioner in conditionersList"
+            :key="conditioner.model"
+            :class="{ selected: conditioner === selected }"
+            @click="change(conditioner)">
+            <p class="model">
+              <span class="manufacturer">{{conditioner.manufacturer}}</span>
+              {{conditioner.model}}
+            </p>
+            <div class="footer">
+              <div class="price">{{conditioner.price.toLocaleString()}} ₽</div>
+              <div class="btu">{{conditioner.type.toUpperCase()}}</div>
+            </div>
+          </li>
+        </ul>
       </div>
     </Accordion>
   </section>
@@ -26,48 +36,52 @@
 <script>
 import GridField from '../Widgets/GridField.vue'
 import FieldHeader from '../UI/FieldHeader.vue'
-import { conditioners } from '../../dataset/data.js'
+import { conditioners, types } from '../../dataset/data.js'
 export default {
+  emits: ['change'],
   props: {
     selected: Object
   },
   data () {
     return {
-      filters: [
-        { label: 'Все', filterFunction: () => true },
-        { label: '0-5 кВт', filterFunction: ({ power }) => power <= 5 },
-        { label: '5-10 кВт', filterFunction: ({ power }) => power > 5 && power <= 10 },
-        { label: '10+ кВт', filterFunction: ({ power }) => power > 10 }
-      ],
+      filters: ['07', '09', '12', '18', '24', '30', '36'],
       filter: null,
       conditioners: conditioners,
       showList: true
     }
   },
   methods: {
+    change (data) {
+      this.$emit('change', data)
+    },
     setFilter (filter) {
       if (filter === this.filter) {
         this.filter = null
+        return
       }
       this.filter = filter
     },
     toggleList () {
       this.showList = !this.showList
-    },
-    change (data) {
-      this.$emit('change', data)
     }
   },
   computed: {
+    filterFunction () {
+      if (!this.filter) {
+        return () => true
+      }
+      const type = Object.values(types).find(({ btu }) => btu.includes(this.filter))
+      return (conditioner) => conditioner.type === type.label
+    },
     conditionersList () {
       if (!this.filter) {
         return this.conditioners
       }
-      return this.conditioners.filter(this.filter.filterFunction)
+      return this.conditioners.filter(this.filterFunction)
     },
     title () {
-      const prefix = 'Модель кондиционера: '
-      return this.selected ? prefix + this.selected?.label : prefix + '<b>Не выбрано</b>'
+      const prefix = 'Модель кондиционера:'
+      return this.selected ? `${prefix} <b>${this.selected.manufacturer}</b> ${this.selected.model}` : `${prefix} <b>Не выбрано</b>`
     }
   },
   components: {
@@ -76,13 +90,10 @@ export default {
   }
 }
 </script>
-,
-    Accordion
 <style lang="stylus" scoped>
 .conditioner-section
   display flex
   flex-direction column
-  overflow hidden
   .conditioner-filter
     display flex
     overflow-x auto
@@ -104,5 +115,45 @@ export default {
         background-color $black-light
         border 2px solid $black-light
         color $white
-   
+
+  .conditioners-grid
+    display flex
+    flex-wrap wrap
+    gap 10px
+    padding 10px
+    overflow-y auto
+    max-height 100%
+    &::-webkit-scrollbar
+      display none
+    li
+      display flex
+      flex-direction column
+      gap 10px
+      padding 10px 15px
+      width calc(50% - 5px)
+      font-weight 500
+      font-size .8em
+      flex-shrink 0
+      border-radius 15px
+      background-color $grey
+      color $black-light
+      &.selected
+        background-color $black-light
+        color $white
+        .price, .btu
+          color $black-light
+      .model
+        .manufacturer
+          font-weight bold
+      .footer
+        display flex
+        justify-content space-between
+        margin auto -5px 0 -5px
+        .price, .btu
+          padding 3px 10px
+          border-radius 10px
+          background $white
+          font-size .8em
+          font-weight bold
+
 </style>

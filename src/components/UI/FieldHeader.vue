@@ -14,6 +14,7 @@ export default {
 <style lang="stylus" scoped>
 .field-header
   margin 15px 15px 5px 15px
+  color $black-light
   sup
     font-size .5em
 </style>

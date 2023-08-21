@@ -44,4 +44,11 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+.configurator
+  display flex
+  flex-direction column
+  overflow-x auto
+  &::-webkit-scrollbar
+    display none
+
 </style>
