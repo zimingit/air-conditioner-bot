@@ -1,4 +1,4 @@
-const areas =  [
+const AREAS =  [
     { label: '20-25', type: 'xs', base: 11000, pipeLayingOrInstallation: 6500, indoorUnit: 3000, dismantling: 6500 },
     { label: '30-35', type: 's',  base: 12000, pipeLayingOrInstallation: 7000, indoorUnit: 3300, dismantling: 7000},
     { label: '40-55', type: 'm',  base: 13000, pipeLayingOrInstallation: 7500, indoorUnit: 3550, dismantling: 7500},
@@ -7,7 +7,7 @@ const areas =  [
     { label: '90-100', type: 'xxl',  base: 15000, pipeLayingOrInstallation: 8500, indoorUnit: 4100, dismantling: 8500 }
 ]
 
-const types = {
+const TYPES = {
     xs: { minArea: 20, maxArea: 25, btu: ['07', '09'], label: 'xs' },
     s: { minArea: 30, maxArea: 35, btu: ['12'], label: 's' },
     m: { minArea: 40, maxArea: 55, btu: ['18'], label: 'm' },
@@ -17,7 +17,7 @@ const types = {
 }
 
 // Модели нужно как-то понятно называть (помимо названия производителя), чтобы принадлежность к типу была
-const conditioners = [
+const CONDITIONERS = [
     { model: 'B07TS', manufacturer: 'LG', power: 2.1, price: 51629, type: 'xs' },
     { model: 'B09TS', manufacturer: 'LG', power: 2.7, price: 55400, type: 'xs' },
     { model: 'EACS-12HAT', manufacturer: 'Electrolux', power: 3.4, price: 40222, type: 's' },
@@ -35,4 +35,9 @@ const conditioners = [
     { model: 'DA-36H', manufacturer: 'Dahatsu', power: 10, price: 109000, type: 'xxl' }
 ]
 
-export { areas, conditioners, types }
+const CONDITIONERSEXTENDED = CONDITIONERS.map(conditioer => {
+    const area = AREAS.find(({ type }) => conditioer.type === type)
+    return { ...conditioer, area }
+})
+
+export { AREAS, CONDITIONERS, CONDITIONERSEXTENDED, TYPES }

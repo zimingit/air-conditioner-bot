@@ -18,14 +18,14 @@
 // ЕСЛИ (S>O) ТО (X+Y+W) + ЕСЛИ (Z = true) ТО (dismantling) ИНАЧЕ (0)
 import ListField from '../Widgets/ListField.vue'
 import FieldHeader from '../UI/FieldHeader.vue'
-import { areas } from '../../dataset/data.js'
+import { AREAS } from '../../dataset/data.js'
 export default {
   props: {
     selected: Object
   },
   data () {
     return {
-      areas: areas
+      areas: AREAS
     }
   },
   methods: {

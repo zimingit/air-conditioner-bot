@@ -1,7 +1,7 @@
 <template>
   <div class="configurator">
     <Conditioner :selected="conditioner" @change="setConditioner"/>
-    <Area :selected="selectedArea" @change="setArea"/>
+    <!-- <Area :selected="selectedArea" @change="setArea"/> -->
     <Dismantling :value="useDismantling" @change="setUseDismantling"/>
   </div>
 </template>

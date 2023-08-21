@@ -4,14 +4,17 @@
 
     <Accordion>
       <div v-if="showList">
-        <ul class="conditioner-filter">
-          <li v-for="label in filters"
-            :key="label"
-            :class="{ selected: filter === label }"
-            @click="setFilter(label)">
-            {{label}}
-          </li>
-        </ul>
+        <div class="filter-block">
+          <p class="label">BTU</p>
+          <ul class="conditioner-filter">
+            <li v-for="label in filters"
+              :key="label"
+              :class="{ selected: filter === label }"
+              @click="setFilter(label)">
+              {{label}}
+            </li>
+          </ul>
+        </div>
 
         <ul class="conditioners-grid">
           <li v-for="conditioner in conditionersList"
@@ -22,6 +25,7 @@
               <span class="manufacturer">{{conditioner.manufacturer}}</span>
               {{conditioner.model}}
             </p>
+            <p class="area">{{conditioner.area.label}} м<sup>2</sup></p>
             <div class="footer">
               <div class="price">{{conditioner.price.toLocaleString()}} ₽</div>
               <div class="btu">{{conditioner.type.toUpperCase()}}</div>
@@ -36,7 +40,7 @@
 <script>
 import GridField from '../Widgets/GridField.vue'
 import FieldHeader from '../UI/FieldHeader.vue'
-import { conditioners, types } from '../../dataset/data.js'
+import { AREAS, CONDITIONERSEXTENDED, TYPES } from '../../dataset/data.js'
 export default {
   emits: ['change'],
   props: {
@@ -46,7 +50,7 @@ export default {
     return {
       filters: ['07', '09', '12', '18', '24', '30', '36'],
       filter: null,
-      conditioners: conditioners,
+      conditioners: CONDITIONERSEXTENDED,
       showList: true
     }
   },
@@ -70,7 +74,7 @@ export default {
       if (!this.filter) {
         return () => true
       }
-      const type = Object.values(types).find(({ btu }) => btu.includes(this.filter))
+      const type = Object.values(TYPES).find(({ btu }) => btu.includes(this.filter))
       return (conditioner) => conditioner.type === type.label
     },
     conditionersList () {
@@ -81,7 +85,10 @@ export default {
     },
     title () {
       const prefix = 'Модель кондиционера:'
-      return this.selected ? `${prefix} <b>${this.selected.manufacturer}</b> ${this.selected.model}` : `${prefix} <b>Не выбрано</b>`
+      if (this.selected) {
+        return `${prefix} <b>${this.selected.manufacturer}</b> ${this.selected.model} (${this.selected.price.toLocaleString()} ₽)`
+      }
+      return `${prefix} <b>Не выбрано</b>`
     }
   },
   components: {
@@ -94,27 +101,36 @@ export default {
 .conditioner-section
   display flex
   flex-direction column
-  .conditioner-filter
+  .filter-block
     display flex
+    flex-direction column
     overflow-x auto
-    padding 20px 15px 10px 15px
-    gap 10px
+    color $black-light
+    padding 5px 15px 5px 15px
     &::-webkit-scrollbar
       display none
-    li
-      display flex
-      align-items center
-      justify-content center
-      padding 3px 15px
+    .label
+      position sticky
+      left 0
       font-weight 500
-      font-size .8em
-      flex-shrink 0
-      border-radius 20px
-      border 2px solid $grey
-      &.selected
-        background-color $black-light
-        border 2px solid $black-light
-        color $white
+    
+    .conditioner-filter
+      display flex
+      gap 10px
+      li
+        display flex
+        align-items center
+        justify-content center
+        padding 3px 15px
+        font-weight 500
+        font-size .8em
+        flex-shrink 0
+        border-radius 20px
+        border 2px solid $grey
+        &.selected
+          background-color $black-light
+          border 2px solid $black-light
+          color $white
 
   .conditioners-grid
     display flex
@@ -128,7 +144,6 @@ export default {
     li
       display flex
       flex-direction column
-      gap 10px
       padding 10px 15px
       width calc(50% - 5px)
       font-weight 500
@@ -145,10 +160,13 @@ export default {
       .model
         .manufacturer
           font-weight bold
+      .area
+        font-size .8em
       .footer
         display flex
         justify-content space-between
         margin auto -5px 0 -5px
+        padding-top 10px
         .price, .btu
           padding 3px 10px
           border-radius 10px
