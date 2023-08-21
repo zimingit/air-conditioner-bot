@@ -104,19 +104,18 @@ export default {
   .filter-block
     display flex
     flex-direction column
-    overflow-x auto
     color $black-light
-    padding 5px 15px 5px 15px
-    &::-webkit-scrollbar
-      display none
     .label
-      position sticky
-      left 0
+      padding 5px 15px 0 15px
       font-weight 500
     
     .conditioner-filter
       display flex
       gap 10px
+      padding 0 15px
+      overflow-x auto
+      &::-webkit-scrollbar
+        display none
       li
         display flex
         align-items center
@@ -136,7 +135,7 @@ export default {
     display flex
     flex-wrap wrap
     gap 10px
-    padding 10px
+    padding 10px 15px
     overflow-y auto
     max-height 100%
     &::-webkit-scrollbar

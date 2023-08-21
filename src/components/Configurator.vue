@@ -47,8 +47,6 @@ export default {
 .configurator
   display flex
   flex-direction column
-  overflow-x auto
-  &::-webkit-scrollbar
-    display none
+  padding 20px 0 50px 0
 
 </style>
