@@ -11,11 +11,6 @@
 </template>
 
 <script>
-// X – стоимость монтажа (base)
-// Y – Закладка труб/монтаж на заложенную трассу (pipeLayingOrInstallation)
-// W – Монтаж/демонтаж внутреннего блока (indoorUnit)
-// Z – Демонтаж кондиционера (useDismantling)
-// ЕСЛИ (S>O) ТО (X+Y+W) + ЕСЛИ (Z = true) ТО (dismantling) ИНАЧЕ (0)
 import ListField from '../Widgets/ListField.vue'
 import FieldHeader from '../UI/FieldHeader.vue'
 import { AREAS } from '../../dataset/data.js'

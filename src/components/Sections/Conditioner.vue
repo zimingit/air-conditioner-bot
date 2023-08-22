@@ -1,6 +1,9 @@
 <template>
   <section class="conditioner-section">
-    <FieldHeader :label="title" @click="toggleList"/>
+    <div class="conditioner-section-header">
+      <FieldHeader :label="title" @click="toggleList"/>
+      <Chevron :opened="showList"/>
+    </div>
 
     <Accordion>
       <div v-if="showList">
@@ -40,7 +43,8 @@
 <script>
 import GridField from '../Widgets/GridField.vue'
 import FieldHeader from '../UI/FieldHeader.vue'
-import { AREAS, CONDITIONERSEXTENDED, TYPES } from '../../dataset/data.js'
+import Chevron from '../UI/Chevron.vue'
+import { CONDITIONERSEXTENDED, TYPES } from '../../dataset/data.js'
 export default {
   emits: ['change'],
   props: {
@@ -93,7 +97,8 @@ export default {
   },
   components: {
     FieldHeader,
-    GridField
+    GridField,
+    Chevron
   }
 }
 </script>
@@ -101,6 +106,10 @@ export default {
 .conditioner-section
   display flex
   flex-direction column
+  .conditioner-section-header
+    display flex
+    align-items center
+    padding-right 16px
   .filter-block
     display flex
     flex-direction column

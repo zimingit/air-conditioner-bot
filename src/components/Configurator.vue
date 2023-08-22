@@ -1,15 +1,15 @@
 <template>
   <div class="configurator">
     <Conditioner :selected="conditioner" @change="setConditioner"/>
-    <!-- <Area :selected="selectedArea" @change="setArea"/> -->
     <Dismantling :value="useDismantling" @change="setUseDismantling"/>
+    <Total v-if="conditioner" :conditioner="conditioner" :useDismantling="useDismantling"/>
   </div>
 </template>
 
 <script>
 import Conditioner from './Sections/Conditioner.vue'
-import Area from './Sections/Area.vue'
 import Dismantling from './Sections/Dismantling.vue'
+import Total from './Sections/Total.vue'
 
 export default {
   props: {
@@ -18,7 +18,6 @@ export default {
   data () {
     return {
       conditioner: null,
-      selectedArea: null,
       useDismantling: false
     }
   },
@@ -28,16 +27,13 @@ export default {
     setConditioner (conditioner) {
       this.conditioner = conditioner
     },
-    setArea (area) {
-      this.selectedArea = area
-    },
     setUseDismantling (dismantling) {
       this.useDismantling = dismantling
     }
   },
   components: {
     Conditioner,
-    Area,
+    Total,
     Dismantling
   }
 }
