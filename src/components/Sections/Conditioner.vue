@@ -1,9 +1,8 @@
 <template>
   <section class="conditioner-section">
-    <div class="conditioner-section-header">
-      <FieldHeader :label="title" @click="toggleList"/>
+    <FieldHeader :label="title" @click="toggleList">
       <Chevron :opened="showList"/>
-    </div>
+    </FieldHeader>
 
     <Accordion>
       <div v-if="showList">
@@ -88,7 +87,7 @@ export default {
       return this.conditioners.filter(this.filterFunction)
     },
     title () {
-      const prefix = 'Модель кондиционера:'
+      const prefix = 'Кондиционер:'
       if (this.selected) {
         return `${prefix} <b>${this.selected.manufacturer}</b> ${this.selected.model} (${this.selected.price.toLocaleString()} ₽)`
       }
@@ -106,10 +105,6 @@ export default {
 .conditioner-section
   display flex
   flex-direction column
-  .conditioner-section-header
-    display flex
-    align-items center
-    padding-right 16px
   .filter-block
     display flex
     flex-direction column

@@ -1,12 +1,11 @@
 <template>
   <section class="total-section">
     <div class="total-button">{{ total }}</div>
-    <div v-if="conditioner"
-      class="total-details"
-      @click="toggleDetail">
-      <p>Детально</p>
+
+    <FieldHeader v-if="conditioner" label="Детально" @click="toggleDetail">
       <Chevron :opened="showDetail"/>
-    </div>
+    </FieldHeader>
+
     <Accordion>
       <ul v-if="showDetail">
         <li>{{conditionerDetail.label}} <span>{{conditionerDetail.value}}</span></li>
@@ -14,6 +13,8 @@
         <li>{{pipeLayingOrInstallation.label}} <span>{{pipeLayingOrInstallation.value}}</span></li>
         <li>{{indoorUnit.label}} <span>{{indoorUnit.value}}</span></li>
         <li v-if="useDismantling">{{dismantling.label}} <span>{{dismantling.value}}</span></li>
+
+        <li v-for="{ label, value } in customFields" :key="label">{{label}} <span>{{value.toLocaleString()}} ₽</span></li>
       </ul>
     </Accordion>
   </section>
@@ -21,6 +22,7 @@
 
 <script>
 import Chevron from '../UI/Chevron.vue'
+import FieldHeader from '../UI/FieldHeader.vue'
 // X – стоимость монтажа (base)
 // Y – Закладка труб/монтаж на заложенную трассу (pipeLayingOrInstallation)
 // W – Монтаж/демонтаж внутреннего блока (indoorUnit)
@@ -29,6 +31,7 @@ import Chevron from '../UI/Chevron.vue'
 export default {
   props: {
     conditioner: Object,
+    customFields: Array,
     useDismantling: Boolean
   },
   data () {
@@ -75,14 +78,16 @@ export default {
     total () {
       const { price, area } = this.conditioner
       const { base, pipeLayingOrInstallation, indoorUnit, dismantling } = area
+      const customPrice = (this.customFields || []).reduce((acc, { value }) => acc + value, 0)
       const dismantlingPrice = this.useDismantling ? dismantling : 0
 
-      const totalPrice = price + base + pipeLayingOrInstallation + indoorUnit + dismantlingPrice
+      const totalPrice = price + base + pipeLayingOrInstallation + indoorUnit + dismantlingPrice + customPrice
       return `${totalPrice.toLocaleString()} ₽`
     }
   },
   components: {
-    Chevron
+    Chevron,
+    FieldHeader
   }
 }
 </script>
@@ -92,11 +97,6 @@ export default {
   display flex
   flex-direction column
   margin 30px 0
-  .total-details
-    display flex
-    align-items center
-    justify-content space-between
-    padding 10px 16px 10px 20px
 
   .total-button
     margin 0 15px
@@ -108,6 +108,7 @@ export default {
     background-color $black-light
     color $white
     font-weight 700
+  
   ul
     display flex
     flex-direction column

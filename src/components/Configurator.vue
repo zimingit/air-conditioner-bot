@@ -2,13 +2,18 @@
   <div class="configurator">
     <Conditioner :selected="conditioner" @change="setConditioner"/>
     <Dismantling :value="useDismantling" @change="setUseDismantling"/>
-    <Total v-if="conditioner" :conditioner="conditioner" :useDismantling="useDismantling"/>
+    <CustomFields @change="setCustom"/>
+    <Total v-if="conditioner"
+      :conditioner="conditioner"
+      :useDismantling="useDismantling"
+      :customFields="customFields"/>
   </div>
 </template>
 
 <script>
 import Conditioner from './Sections/Conditioner.vue'
 import Dismantling from './Sections/Dismantling.vue'
+import CustomFields from './Sections/CustomFields.vue'
 import Total from './Sections/Total.vue'
 
 export default {
@@ -18,12 +23,16 @@ export default {
   data () {
     return {
       conditioner: null,
-      useDismantling: false
+      useDismantling: false,
+      customFields: null
     }
   },
   created () {
   },
   methods: {
+    setCustom (data) {
+      this.customFields = data
+    },
     setConditioner (conditioner) {
       this.conditioner = conditioner
     },
@@ -34,7 +43,8 @@ export default {
   components: {
     Conditioner,
     Total,
-    Dismantling
+    Dismantling,
+    CustomFields
   }
 }
 </script>
