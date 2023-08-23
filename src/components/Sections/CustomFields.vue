@@ -202,7 +202,7 @@ export default {
             border-radius 50px
             width 100%
             height 30px
-            padding 0 20px 0 10px
+            padding 2px 25px 0 10px
             border-bottom 2px solid transparent
             transition border-bottom .2s ease
             &.error
@@ -210,10 +210,10 @@ export default {
             &:focus
               border-bottom 2px solid $green
             &:first-child
-              padding 0 10px
+              padding 2px 10px 0 10px
               width 200%
           span
-            margin-left -20px
+            margin-left -25px
             margin-right 10px
           .delete-field
             display flex

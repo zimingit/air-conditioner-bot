@@ -21,8 +21,6 @@ export default {
   align-items center
   justify-content space-between
   gap 20px
-  h4
-    flex-shrink 0
   sup
     font-size .5em
 </style>
