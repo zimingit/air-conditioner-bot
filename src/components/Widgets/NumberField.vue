@@ -6,7 +6,11 @@
       </svg>
     </div>
 
-    <input type="number" :value="value" @input="input">
+    <input
+      :name="name"
+      type="number"
+      :value="value"
+      @input="input">
 
     <div class="plus" @click="increase">
       <svg width="18" height="18" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
@@ -22,6 +26,7 @@ export default {
   emits: ['change'],
   props: {
     value: Number,
+    name: String,
     step: {
       type: Number,
       default: 1

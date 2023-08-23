@@ -15,7 +15,7 @@ export default {
 
 <style lang="stylus" scoped>
 .field-header
-  margin 15px 15px 5px 15px
+  margin 15px 15px 10px 15px
   color $black-light
   display flex
   align-items center

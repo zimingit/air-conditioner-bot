@@ -17,7 +17,7 @@ import Conditioner from './Sections/Conditioner.vue'
 import Dismantling from './Sections/Dismantling.vue'
 import AdditionalServices from './Sections/AdditionalServices.vue'
 import CustomFields from './Sections/CustomFields.vue'
-import Total from './Sections/Total.vue'
+import Total from './Sections/Total/Total.vue'
 
 export default {
   props: {
@@ -28,7 +28,7 @@ export default {
       additionalServices: [],
       conditioner: null,
       useDismantling: false,
-      customFields: null
+      customFields: []
     }
   },
   created () {

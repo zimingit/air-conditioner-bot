@@ -52,7 +52,6 @@ const ADDITIONALSERVICESWIDGETS = {
     freonRouteExtension: { name: 'number', params: { step: 1 }, unit: 'м' },
     electricalCable: { name: 'number', params: { step: 1 }, unit: 'м' },
     electricCableChannel: { name: 'number', params: { step: 1 }, unit: 'м' },
-    electricCableChannel: { name: 'number', params: { step: 1 }, unit: 'м' },
     freonCableChannel: { name: 'number', params: { step: 1 }, unit: 'м' },
     drainage: { name: 'number', params: { step: 1 }, unit: 'м' },
     freonRefueling: { name: 'switcher', params: {}, unit: '' },

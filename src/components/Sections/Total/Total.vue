@@ -8,34 +8,20 @@
 
     <Accordion>
       <div class="total-details" v-if="showDetail">
-        <h5>Монтаж</h5>
-        <ul>
-          <li>{{conditionerDetail.label}} <span>{{conditionerDetail.value}}</span></li>
-          <li>{{installation.label}} <span>{{installation.value}}</span></li>
-          <li>{{pipeLayingOrInstallation.label}} <span>{{pipeLayingOrInstallation.value}}</span></li>
-          <li>{{indoorUnit.label}} <span>{{indoorUnit.value}}</span></li>
-          <li v-if="useDismantling">{{dismantling.label}} <span>{{dismantling.value}}</span></li>
-        </ul>
-        
-        <template v-if="hasCustomFields">
-          <h5>Дополнительная номенклатура</h5>
-          <ul>
-            <li v-for="{ label, value } in customFields" :key="label">{{label}} <span>{{value.toLocaleString()}} ₽</span></li>
-          </ul>
-        </template>
+        <TotalInstallation :conditioner="conditioner" :useDismantling="useDismantling"/>
+        <TotalAdditionalServices :additionalServices="additionalServices" @change="setTotalServices"/>
+        <TotalCustomFields :customFields="customFields" @change="setTotalCustomFields"/>
       </div>
     </Accordion>
   </section>
 </template>
 
 <script>
-import Chevron from '../UI/Chevron.vue'
-import FieldHeader from '../UI/FieldHeader.vue'
-// X – стоимость монтажа (base)
-// Y – Закладка труб/монтаж на заложенную трассу (pipeLayingOrInstallation)
-// W – Монтаж/демонтаж внутреннего блока (indoorUnit)
-// Z – Демонтаж кондиционера (useDismantling)
-// ЕСЛИ (S>O) ТО (X+Y+W) + ЕСЛИ (Z = true) ТО (dismantling) ИНАЧЕ (0)
+import Chevron from '../../UI/Chevron.vue'
+import FieldHeader from '../../UI/FieldHeader.vue'
+import TotalInstallation from './TotalInstallation.vue'
+import TotalCustomFields from './TotalCustomFields.vue'
+import TotalAdditionalServices from './TotalAdditionalServices.vue'
 export default {
   props: {
     conditioner: Object,
@@ -45,18 +31,25 @@ export default {
   },
   data () {
     return {
-      showDetail: false
+      showDetail: false,
+      totalServicesPrice: 0,
+      totalCustomFieldsPrice: 0
     }
   },
   methods: {
+    setTotalServices (services) {
+      const price = (services || []).reduce((acc, { value }) => acc + value, 0)
+      this.totalServicesPrice = price
+    },
+    setTotalCustomFields (fields) {
+      const price = (fields || []).reduce((acc, { value }) => acc + value, 0)
+      this.totalCustomFieldsPrice = price
+    },
     toggleDetail () {
       this.showDetail = !this.showDetail
     }
   },
   computed: {
-    hasCustomFields () {
-      return this.customFields && this.customFields.length > 0
-    },
     dismantling () {
       const { dismantling } = this.conditioner.area
       const label = 'Демонтаж кондиционера'
@@ -90,16 +83,18 @@ export default {
     total () {
       const { price, area } = this.conditioner
       const { base, pipeLayingOrInstallation, indoorUnit, dismantling } = area
-      const customPrice = (this.customFields || []).reduce((acc, { value }) => acc + value, 0)
       const dismantlingPrice = this.useDismantling ? dismantling : 0
 
-      const totalPrice = price + base + pipeLayingOrInstallation + indoorUnit + dismantlingPrice + customPrice
+      const totalPrice = price + base + pipeLayingOrInstallation + indoorUnit + dismantlingPrice + this.totalCustomFieldsPrice + this.totalServicesPrice
       return `${totalPrice.toLocaleString()} ₽`
     }
   },
   components: {
     Chevron,
-    FieldHeader
+    FieldHeader,
+    TotalInstallation,
+    TotalCustomFields,
+    TotalAdditionalServices
   }
 }
 </script>
@@ -120,24 +115,5 @@ export default {
     background-color $black-light
     color $white
     font-weight 700
-  h5
-    margin 20px 20px 5px 20px
-    color $grey-dark
-  ul
-    display flex
-    flex-direction column
-    color $black-light
-    font-size .8em
-    li
-      display flex
-      align-items center
-      justify-content space-between
-      gap 20px
-      padding 8px 20px
-      span
-        font-weight 500
-        flex-shrink 0
-      &:nth-child(odd)
-        background-color $grey-light
 
 </style>

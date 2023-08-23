@@ -14,13 +14,14 @@
             </div>
 
             <NumberField v-if="service?.widget?.name === 'number'"
+              :name="service.name"
               v-bind="service?.widget?.params"
               :value="values[service.name]"
-              @change="(value) => setFieldValue(service.name, value)"/>
+              @change="(value) => setFieldValue(service, value)"/>
             <SwitcherField v-else-if="service?.widget?.name === 'switcher'"
               v-bind="service?.widget?.params"
               :value="values[service.name]"
-              @switch="(value) => setFieldValue(service.name, value)"/>
+              @switch="(value) => setFieldValue(service, value)"/>
           </div>
           <ListField v-if="service.prices"
             :data="service.prices"
@@ -53,6 +54,7 @@ export default {
   },
   created () {
     this.init()
+    this.change()
   },
   methods: {
     init () {
@@ -78,13 +80,19 @@ export default {
         option.selected = option.name === selected.name
       })
     },
-    setFieldValue (key, value) {
+    setFieldValue (service, value) {
+      const key = service.name
       this.values[key] = value
+      this.change()
     },
     toggleServices () {
       this.showServices = !this.showServices
     },
-    change (data) {
+    change () {
+      const data = this.services.map(service => {
+        const value = this.values[service.name]
+        return { ...service, value }
+      })
       this.$emit('change', data)
     }
   },

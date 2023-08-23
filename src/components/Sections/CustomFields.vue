@@ -2,7 +2,7 @@
   <section class="custom-fields-section">
     <FieldHeader label="Своя номенклатура" @click="toggleCustomList">
       <div class="field-header-extends">
-        <span v-if="badge">{{badge}}</span>
+        <span v-if="filledFieldsCount">{{filledFieldsCount}}</span>
         <Chevron :opened="showCustomList"/>
       </div>
     </FieldHeader>
@@ -13,17 +13,21 @@
           <li v-for="[key, field] in fields" :key="key">
             <div class="custom-field-row">
 
-              <input type="text" v-model="field.label"
+              <input v-model="field.label"
+                :name="key + '_label'"
+                :class="{ error: !field.labelValid }"
+                type="text"
                 placeholder="Номенклатура"
                 @input="setFilled(key)"
-                @change="setError(key)"
-                :class="{ error: !field.labelValid }"/>
+                @change="setError(key)"/>
 
-              <input type="number" v-model.number="field.value"
+              <input v-model.number="field.value"
+                :name="key + '_value'"
+                :class="{ error: !field.valueValid }"
+                type="number"
                 placeholder="Стоимость"
                 @input="setFilled(key)"
-                @change="setError(key)"
-                :class="{ error: !field.valueValid }"/>
+                @change="setError(key)"/>
 
               <span>₽</span>
 
@@ -67,7 +71,8 @@ export default {
   },
   data () {
     return {
-      showCustomList: true,
+      showCustomList: false,
+      filledFieldsCount: 0,
       fields: new Map()
     }
   },
@@ -107,8 +112,12 @@ export default {
         data.error = ''
       }
     },
+    setFilledCount () {
+      this.filledFieldsCount = this.filledData.length
+    },
     deleteField (key) {
       this.fields.delete(key)
+      this.change()
     },
     addField () {
       const key = +new Date()
@@ -131,15 +140,12 @@ export default {
         }
       })
       this.$emit('change', filled)
+      this.setFilledCount()
     }
   },
   computed: {
     filledData () {
       return [...this.fields].filter(([, value]) => value.filled)
-    },
-    badge () {
-      const filledCount = this.filledData.length
-      return filledCount
     },
     buttonAddTitle () {
       return this.fields.size === 0 ? `Создать номенклатуру` : `Добавить`

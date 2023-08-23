@@ -60,6 +60,7 @@ export default {
   methods: {
     change (data) {
       this.$emit('change', data)
+      this.toggleList()
     },
     setFilter (filter) {
       if (filter === this.filter) {
