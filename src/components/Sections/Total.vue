@@ -55,7 +55,7 @@ export default {
   },
   computed: {
     hasCustomFields () {
-      return this.customFields.length > 0
+      return this.customFields && this.customFields.length > 0
     },
     dismantling () {
       const { dismantling } = this.conditioner.area

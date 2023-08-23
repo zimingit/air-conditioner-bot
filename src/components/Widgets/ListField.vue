@@ -2,7 +2,7 @@
   <ul class="list-field">
     <li v-for="item in data"
       :key="item.key || item.label"
-      :class="{ selected: item === selected }"
+      :class="{ selected: item === selected || item.selected }"
       @click="change(item)">
       <p>{{item.label}}</p>
     </li>
@@ -36,13 +36,12 @@ export default {
     display flex
     align-items center
     justify-content center
-    width 70px
-    height 50px
+    padding 5px 20px
     font-weight 500
     font-size .8em
     flex-shrink 0
     border-radius 20px
-    background-color $grey
+    background-color $grey-light
     &.selected
       background-color $black-light
       color $white

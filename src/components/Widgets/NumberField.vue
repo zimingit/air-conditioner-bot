@@ -1,10 +1,18 @@
 <template>
   <div class="widget-number">
-    <div class="minus" @click="decrease">-</div>
+    <div class="minus" @click="decrease">
+      <svg width="18" height="18" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8.33337 20H31.6667" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
 
     <input type="number" :value="value" @input="input">
 
-    <div class="plus" @click="increase">+</div>
+    <div class="plus" @click="increase">
+      <svg width="18" height="18" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 8.33331V31.6666M8.33337 20H31.6667" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
   </div>
 </template>
 
@@ -64,4 +72,6 @@ export default {
     height 30px
     border-radius 10px
     background-color $grey-light
+    svg
+      stroke currentColor
 </style>

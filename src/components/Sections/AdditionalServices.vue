@@ -5,28 +5,30 @@
     </FieldHeader>
 
     <Accordion>
-      <ul v-if="showServices">
+      <ul v-if="showServices" class="services-list">
         <li v-for="service in services" :key="service.name">
-          <div class="service-info">
-            <p>{{service.label}} <b v-if="service?.widget?.unit">({{service?.widget?.unit}})</b></p>
-            <span>{{service.description}}</span>
-          </div>
+          <div class="services-widget">
+            <div class="service-info">
+              <p>{{service.label}} <b v-if="service?.widget?.unit">({{service?.widget?.unit}})</b></p>
+              <span>{{service.description}}</span>
+            </div>
 
-          <NumberField v-if="service?.widget?.name === 'number'"
-            v-bind="service?.widget?.params"
-            :value="values[service.name]"
-            @change="(value) => setFieldValue(service.name, value)"/>
-          <SwitcherField v-else-if="service?.widget?.name === 'switcher'"
-            v-bind="service?.widget?.params"
-            :value="values[service.name]"
-            @switch="(value) => setFieldValue(service.name, value)"/>
+            <NumberField v-if="service?.widget?.name === 'number'"
+              v-bind="service?.widget?.params"
+              :value="values[service.name]"
+              @change="(value) => setFieldValue(service.name, value)"/>
+            <SwitcherField v-else-if="service?.widget?.name === 'switcher'"
+              v-bind="service?.widget?.params"
+              :value="values[service.name]"
+              @switch="(value) => setFieldValue(service.name, value)"/>
+          </div>
+          <ListField v-if="service.prices"
+            :data="service.prices"
+            :selected="getSelectedOption(service.prices)"
+            @change="(selected) => setSelectedOption(service.prices, selected)"/>
         </li>
       </ul>
-    <!-- <ListField
-      class="area-list"
-      :data="areas"
-      :selected="selected"
-      @change="change"/> -->
+    
     </Accordion>
   </section>
 </template>
@@ -68,6 +70,14 @@ export default {
           return service
         })
     },
+    getSelectedOption (options) {
+      return options.find(option => option.selected)
+    },
+    setSelectedOption (options, selected) {
+      return options.forEach(option => {
+        option.selected = option.name === selected.name
+      })
+    },
     setFieldValue (key, value) {
       this.values[key] = value
     },
@@ -94,20 +104,25 @@ export default {
   flex-direction column
   color $black-light
   overflow hidden
-  ul
+  .services-list
     display flex
     flex-direction column
-    gap 5px
+    gap 20px
+    padding 10px 0
     li
       display flex
-      align-items center
-      justify-content space-between
+      flex-direction column
       padding 5px 15px
-      gap 20px
-      
+      gap 5px
+      .services-widget
+        display flex
+        align-items center
+        justify-content space-between
+        gap 10px
       .service-info
         display flex
         flex-direction column
+        gap 2px
         font-size .9em
         line-height .9em
         b
