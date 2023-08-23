@@ -89,7 +89,7 @@ export default {
     title () {
       const prefix = 'Кондиционер:'
       if (this.selected) {
-        return `${prefix} <b>${this.selected.manufacturer}</b> ${this.selected.model} (${this.selected.price.toLocaleString()} ₽)`
+        return `${prefix} <b>${this.selected.manufacturer}</b> ${this.selected.model} (<b>${this.selected.price.toLocaleString()}</b> ₽)`
       }
       return `${prefix} <b>Не выбрано</b>`
     }

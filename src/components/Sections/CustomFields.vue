@@ -1,6 +1,6 @@
 <template>
   <section class="custom-fields-section">
-    <FieldHeader label="Дополнительно" @click="toggleCustomList">
+    <FieldHeader label="Своя номенклатура" @click="toggleCustomList">
       <div class="field-header-extends">
         <span v-if="badge">{{badge}}</span>
         <Chevron :opened="showCustomList"/>
@@ -67,7 +67,7 @@ export default {
   },
   data () {
     return {
-      showCustomList: false,
+      showCustomList: true,
       fields: new Map()
     }
   },

@@ -1,21 +1,29 @@
 <template>
   <section class="total-section">
-    <div class="total-button">{{ total }}</div>
+    <div class="total-button">Итого {{ total }}</div>
 
     <FieldHeader v-if="conditioner" label="Детально" @click="toggleDetail">
       <Chevron :opened="showDetail"/>
     </FieldHeader>
 
     <Accordion>
-      <ul v-if="showDetail">
-        <li>{{conditionerDetail.label}} <span>{{conditionerDetail.value}}</span></li>
-        <li>{{installation.label}} <span>{{installation.value}}</span></li>
-        <li>{{pipeLayingOrInstallation.label}} <span>{{pipeLayingOrInstallation.value}}</span></li>
-        <li>{{indoorUnit.label}} <span>{{indoorUnit.value}}</span></li>
-        <li v-if="useDismantling">{{dismantling.label}} <span>{{dismantling.value}}</span></li>
-
-        <li v-for="{ label, value } in customFields" :key="label">{{label}} <span>{{value.toLocaleString()}} ₽</span></li>
-      </ul>
+      <div class="total-details" v-if="showDetail">
+        <h5>Монтаж</h5>
+        <ul>
+          <li>{{conditionerDetail.label}} <span>{{conditionerDetail.value}}</span></li>
+          <li>{{installation.label}} <span>{{installation.value}}</span></li>
+          <li>{{pipeLayingOrInstallation.label}} <span>{{pipeLayingOrInstallation.value}}</span></li>
+          <li>{{indoorUnit.label}} <span>{{indoorUnit.value}}</span></li>
+          <li v-if="useDismantling">{{dismantling.label}} <span>{{dismantling.value}}</span></li>
+        </ul>
+        
+        <template v-if="hasCustomFields">
+          <h5>Дополнительная номенклатура</h5>
+          <ul>
+            <li v-for="{ label, value } in customFields" :key="label">{{label}} <span>{{value.toLocaleString()}} ₽</span></li>
+          </ul>
+        </template>
+      </div>
     </Accordion>
   </section>
 </template>
@@ -32,6 +40,7 @@ export default {
   props: {
     conditioner: Object,
     customFields: Array,
+    additionalServices: Array,
     useDismantling: Boolean
   },
   data () {
@@ -45,6 +54,9 @@ export default {
     }
   },
   computed: {
+    hasCustomFields () {
+      return this.customFields.length > 0
+    },
     dismantling () {
       const { dismantling } = this.conditioner.area
       const label = 'Демонтаж кондиционера'
@@ -108,7 +120,9 @@ export default {
     background-color $black-light
     color $white
     font-weight 700
-  
+  h5
+    margin 20px 20px 5px 20px
+    color $grey-dark
   ul
     display flex
     flex-direction column

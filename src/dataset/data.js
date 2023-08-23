@@ -35,9 +35,55 @@ const CONDITIONERS = [
     { model: 'DA-36H', manufacturer: 'Dahatsu', power: 10, price: 109000, type: 'xxl' }
 ]
 
+const freonRouteExtension = [
+    { name: 's', label: 'До 5 кВт', price: 1000 },
+    { name: 'm', label: 'До 10 кВт', price: 1500 },
+    { name: 'l', label: 'Свыше 10 кВт', price: 2000 },
+]
+const cableСhannel = [
+    { name: 'simple', label: 'ПВХ', price: 600 },
+    { name: 'arctic', label: 'Арктика', price: 1000 }
+]
+const freon = [
+    { name: 'r4', label: 'R 410А', price: 220 },
+    { name: 'r2', label: 'R22,32', price: 320 }
+]
+const ADDITIONALSERVICESWIDGETS = {
+    freonRouteExtension: { name: 'number', params: { step: 1 }, unit: 'м' },
+    electricalCable: { name: 'number', params: { step: 1 }, unit: 'м' },
+    electricCableChannel: { name: 'number', params: { step: 1 }, unit: 'м' },
+    electricCableChannel: { name: 'number', params: { step: 1 }, unit: 'м' },
+    freonCableChannel: { name: 'number', params: { step: 1 }, unit: 'м' },
+    drainage: { name: 'number', params: { step: 1 }, unit: 'м' },
+    freonRefueling: { name: 'switcher', params: {}, unit: '' },
+    freon: { name: 'number', params: { step: 100 }, unit: 'гр' }
+}
+
+const ADDITIONALSERVICES = [
+    { name: 'freonRouteExtension',      label: 'Удлинение трассы фреон',  description: '',                                    price: null,        prices: freonRouteExtension },
+    { name: 'electricalCable',          label: 'Электрический кабель',    description: '',                                    price: 170,         prices: [] },
+    { name: 'electricCableChannel',     label: 'Кабель-канал',            description: 'Под электрический кабель',            price: 170,         prices: [] },
+    { name: 'freonCableChannel',        label: 'Кабель-канал',            description: 'Под трассу фреон',                    price: null,        prices: cableСhannel },
+    { name: 'drainage',                 label: 'Дренаж ',                 description: 'Свыше 5 метров',                      price: 170,         prices: [] },       
+    { name: 'freonRefueling',           label: 'Дозаправка фреоном',      description: 'При длине трассы более 7 метров',     price: 1500,        prices: [] },
+    { name: 'freon',                    label: 'Фреон',                   description: 'При дозаправке считаем по 100 грамм', price: null,        prices: freon }
+]
+
 const CONDITIONERSEXTENDED = CONDITIONERS.map(conditioer => {
     const area = AREAS.find(({ type }) => conditioer.type === type)
     return { ...conditioer, area }
 })
+const ADDITIONALSERVICESEXTENDED = ADDITIONALSERVICES.map(service => {
+    const key = service.name
+    const widget = ADDITIONALSERVICESWIDGETS[key]
+    return { ...service, widget }
+})
 
-export { AREAS, CONDITIONERS, CONDITIONERSEXTENDED, TYPES }
+export {
+    AREAS,
+    CONDITIONERS,
+    CONDITIONERSEXTENDED,
+    TYPES,
+    ADDITIONALSERVICES,
+    ADDITIONALSERVICESEXTENDED
+}

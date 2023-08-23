@@ -1,33 +1,28 @@
 <template>
   <section class="dismantling-section">
-    <SwitcherField
-      :value="value"
-      @switch="change">
-        Нужен демонтаж
-    </SwitcherField>
+    <FieldHeader label="Нужен демонтаж" @click="change">
+      <Switcher :value="value"></Switcher>
+    </FieldHeader>
+    
   </section>
 </template>
 
 <script>
-import SwitcherField from '../Widgets/SwitcherField.vue'
+import FieldHeader from '../UI/FieldHeader.vue'
+import Switcher from '../UI/Switcher.vue'
 export default {
   emits: ['change'],
   props: {
     value: Boolean
   },
   methods: {
-    change (value) {
-      this.$emit('change', value)
+    change () {
+      this.$emit('change', !this.value)
     }
   },
   components: {
-    SwitcherField
+    FieldHeader,
+    Switcher
   }
 }
 </script>
-
-<style lang="stylus" scoped>
-.dismantling-section
-  padding 5px 15px
-  margin 5px 0
-</style>
