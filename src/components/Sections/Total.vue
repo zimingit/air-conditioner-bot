@@ -96,7 +96,7 @@ export default {
 .total-section
   display flex
   flex-direction column
-  margin 30px 0
+  margin 50px 0
 
   .total-button
     margin 0 15px
