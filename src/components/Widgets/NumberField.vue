@@ -63,7 +63,6 @@ export default {
 <style lang="stylus" scoped>
 .widget-number
   display flex
-  gap 10px
   input
     width 35px
     text-align center
@@ -75,6 +74,7 @@ export default {
     align-items center
     width 30px
     height 30px
+    margin 5px
     border-radius 10px
     background-color $grey-light
     svg

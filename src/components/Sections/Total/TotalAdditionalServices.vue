@@ -64,14 +64,14 @@ export default {
       }
       return { label, value }
     },
-    // Кабель-канал под трассу фреон: Стандартный(simpe) / Арктика(arctic)
+    // Кабель-канал под трассу фреон: Стандартный(simple) / Арктика(arctic)
     getFreonCableChannelPrice (service) {
       const cableLength = service.value
       const { price, name, label: cableLabel } = this.getSelectedOption(service)
       const label = `${service.label} (под фреон "${cableLabel}")`
 
       let value = null
-      if (cableLength > 0.5 && name === 'simpe') {
+      if (cableLength > 0.5 && name === 'simple') {
         value = (cableLength - 0.5) * price
       } else if (cableLength && name === 'arctic') {
         value = cableLength * price
@@ -117,7 +117,7 @@ export default {
   },
   computed: {
     hasData () {
-      return this.additionalServices.length > 0
+      return this.servicesPrice.length > 0
     },
     servicesPrice () {
       const calculateFunctionsByFieldName = {

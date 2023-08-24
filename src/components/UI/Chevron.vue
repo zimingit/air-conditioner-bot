@@ -18,4 +18,8 @@ export default {
   flex-shrink 0
   &.opened
     transform rotate(90deg)
+
+.field-header-extends
+  .chevron-icon
+    margin-left auto
 </style>

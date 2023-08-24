@@ -35,6 +35,12 @@ const CONDITIONERS = [
     { model: 'DA-36H', manufacturer: 'Dahatsu', power: 10, price: 109000, type: 'xxl' }
 ]
 
+const CONDITIONERSEXTENDED = CONDITIONERS.map(conditioer => {
+    const area = AREAS.find(({ type }) => conditioer.type === type)
+    return { ...conditioer, area }
+})
+
+// Доп.услуги
 const freonRouteExtension = [
     { name: 's', label: 'До 5 кВт', price: 1000 },
     { name: 'm', label: 'До 10 кВт', price: 1500 },
@@ -68,15 +74,38 @@ const ADDITIONALSERVICES = [
     { name: 'freon',                    label: 'Фреон',                   description: 'При дозаправке считаем по 100 грамм', price: null,        prices: freon }
 ]
 
-const CONDITIONERSEXTENDED = CONDITIONERS.map(conditioer => {
-    const area = AREAS.find(({ type }) => conditioer.type === type)
-    return { ...conditioer, area }
-})
 const ADDITIONALSERVICESEXTENDED = ADDITIONALSERVICES.map(service => {
     const key = service.name
     const widget = ADDITIONALSERVICESWIDGETS[key]
     return { ...service, widget }
 })
+
+// Штробление стен
+
+const pricesByMaterialType = {
+    brick: 720,
+    beton: 960,
+    insulation: 300,
+    gasBlock: 720,
+    wood: 720
+}
+const freonRouteChaisingPriceByCableType = [
+    { name: 'simple', label: 'ПВХ', price: pricesByMaterialType },
+    { name: 'arctic', label: 'Арктика', price: { brick: 1000, beton: 1500, insulation: 400, gasBlock: 1000, wood: 1000 } }
+]
+const WALLMATERIALS = [
+    { name: 'brick',        label: 'Кирпич' },
+    { name: 'beton',        label: 'Бетон' },
+    { name: 'insulation',   label: 'Утеплитель' },
+    { name: 'gasBlock',     label: 'Газоблок' },
+    { name: 'wood',         label: 'Дерево' }
+]
+const WALLCHASINGS = [
+    { name: 'drainageRoute',  label: 'Под дренаж',   description: '', price: pricesByMaterialType },
+    { name: 'cableRoute',     label: 'Под кабель',   description: '', price: pricesByMaterialType },
+    { name: 'freonRoute',     label: 'Под фреон',    description: '', prices: freonRouteChaisingPriceByCableType }
+]
+
 
 export {
     AREAS,
@@ -84,5 +113,7 @@ export {
     CONDITIONERSEXTENDED,
     TYPES,
     ADDITIONALSERVICES,
-    ADDITIONALSERVICESEXTENDED
+    ADDITIONALSERVICESEXTENDED,
+    WALLMATERIALS,
+    WALLCHASINGS
 }

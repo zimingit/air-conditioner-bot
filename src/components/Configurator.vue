@@ -3,6 +3,7 @@
     <Conditioner :selected="conditioner" @change="setConditioner"/>
     <Dismantling :value="useDismantling" @change="setUseDismantling"/>
     <AdditionalServices :conditioner="conditioner" @change="setAdditionalServices"/>
+    <WallChasing @change="setWallChasing"/>
     <CustomFields @change="setCustom"/>
     <Total v-if="conditioner"
       :conditioner="conditioner"
@@ -16,6 +17,7 @@
 import Conditioner from './Sections/Conditioner.vue'
 import Dismantling from './Sections/Dismantling.vue'
 import AdditionalServices from './Sections/AdditionalServices.vue'
+import WallChasing from './Sections/WallChasing.vue'
 import CustomFields from './Sections/CustomFields.vue'
 import Total from './Sections/Total/Total.vue'
 
@@ -26,6 +28,7 @@ export default {
   data () {
     return {
       additionalServices: [],
+      wallChasing: [],
       conditioner: null,
       useDismantling: false,
       customFields: []
@@ -34,6 +37,9 @@ export default {
   created () {
   },
   methods: {
+    setWallChasing (wallChasing) {
+      this.wallChasing = wallChasing
+    },
     setAdditionalServices (additionalServices) {
       this.additionalServices = additionalServices
     },
@@ -52,7 +58,8 @@ export default {
     Total,
     Dismantling,
     CustomFields,
-    AdditionalServices
+    AdditionalServices,
+    WallChasing
   }
 }
 </script>

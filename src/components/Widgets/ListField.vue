@@ -2,7 +2,7 @@
   <ul class="list-field">
     <li v-for="item in data"
       :key="item.key || item.label"
-      :class="{ selected: item === selected || item.selected }"
+      :class="{ selected: item === selected }"
       @click="change(item)">
       <p>{{item.label}}</p>
     </li>

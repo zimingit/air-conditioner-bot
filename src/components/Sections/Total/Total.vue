@@ -7,7 +7,7 @@
     </FieldHeader>
 
     <Accordion>
-      <div class="total-details" v-if="showDetail">
+      <div class="total-details" v-show="showDetail">
         <TotalInstallation :conditioner="conditioner" :useDismantling="useDismantling"/>
         <TotalAdditionalServices :additionalServices="additionalServices" @change="setTotalServices"/>
         <TotalCustomFields :customFields="customFields" @change="setTotalCustomFields"/>

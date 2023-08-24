@@ -1,11 +1,12 @@
 <template>
   <section class="additional-services-section">
-    <FieldHeader label="Дополнительные услуги"  @click="toggleServices">
-      <Chevron :opened="showServices"/>
+    <FieldHeader label="Дополнительные услуги" @click="toggleList">
+      <Badge v-if="filledValuesCount">{{filledValuesCount}}</Badge>
+      <Chevron :opened="showList"/>
     </FieldHeader>
 
     <Accordion>
-      <ul v-if="showServices" class="services-list">
+      <ul v-if="showList" class="services-list">
         <li v-for="service in services" :key="service.name">
           <div class="services-widget">
             <div class="service-info">
@@ -23,7 +24,7 @@
               :value="values[service.name]"
               @switch="(value) => setFieldValue(service, value)"/>
           </div>
-          <ListField v-if="service.prices"
+          <ListField v-if="service.prices.length"
             :data="service.prices"
             :selected="getSelectedOption(service.prices)"
             @change="(selected) => setSelectedOption(service.prices, selected)"/>
@@ -38,6 +39,7 @@
 import ListField from '../Widgets/ListField.vue'
 import FieldHeader from '../UI/FieldHeader.vue'
 import Chevron from '../UI/Chevron.vue'
+import Badge from '../UI/Badge.vue'
 import SwitcherField from '../UI/Switcher.vue'
 import NumberField from '../Widgets/NumberField.vue'
 import { ADDITIONALSERVICESEXTENDED } from '../../dataset/data.js'
@@ -47,7 +49,7 @@ export default {
   },
   data () {
     return {
-      showServices: false,
+      showList: false,
       services: [],
       values: {}
     }
@@ -76,17 +78,18 @@ export default {
       return options.find(option => option.selected)
     },
     setSelectedOption (options, selected) {
-      return options.forEach(option => {
+      options.forEach(option => {
         option.selected = option.name === selected.name
       })
+      this.change()
     },
     setFieldValue (service, value) {
       const key = service.name
       this.values[key] = value
       this.change()
     },
-    toggleServices () {
-      this.showServices = !this.showServices
+    toggleList () {
+      this.showList = !this.showList
     },
     change () {
       const data = this.services.map(service => {
@@ -96,10 +99,16 @@ export default {
       this.$emit('change', data)
     }
   },
+  computed: {
+    filledValuesCount () {
+      return Object.values(this.values).filter(value => value).length
+    }
+  },
   components: {
     FieldHeader,
     ListField,
     Chevron,
+    Badge,
     SwitcherField,
     NumberField
   }
@@ -115,13 +124,12 @@ export default {
   .services-list
     display flex
     flex-direction column
-    gap 20px
+    gap 5px
     padding 10px 0
     li
       display flex
       flex-direction column
-      padding 5px 15px
-      gap 5px
+      padding 5px 10px 5px 15px
       .services-widget
         display flex
         align-items center

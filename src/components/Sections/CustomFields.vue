@@ -1,10 +1,8 @@
 <template>
   <section class="custom-fields-section">
     <FieldHeader label="Своя номенклатура" @click="toggleCustomList">
-      <div class="field-header-extends">
-        <span v-if="filledFieldsCount">{{filledFieldsCount}}</span>
-        <Chevron :opened="showCustomList"/>
-      </div>
+      <Badge v-if="filledFieldsCount">{{filledFieldsCount}}</Badge>
+      <Chevron :opened="showCustomList"/>
     </FieldHeader>
 
     <Accordion>
@@ -64,11 +62,9 @@
 <script>
 import FieldHeader from '../UI/FieldHeader.vue'
 import Chevron from '../UI/Chevron.vue'
+import Badge from '../UI/Badge.vue'
 export default {
   emits: ['change'],
-  props: {
-    selected: Object
-  },
   data () {
     return {
       showCustomList: false,
@@ -148,12 +144,13 @@ export default {
       return [...this.fields].filter(([, value]) => value.filled)
     },
     buttonAddTitle () {
-      return this.fields.size === 0 ? `Создать номенклатуру` : `Добавить`
+      return this.fields.size === 0 ? `Создать` : `Добавить`
     }
   },
   components: {
     FieldHeader,
-    Chevron
+    Chevron,
+    Badge
   }
 }
 </script>
@@ -164,24 +161,6 @@ export default {
   flex-direction column
   overflow hidden
   color $black-light
-  .field-header-extends
-    display flex
-    flex 1
-    margin-left -15px
-    svg
-      margin-left auto
-    span
-      font-weight bold
-      font-size .7em
-      display flex
-      align-items center
-      justify-content center
-      padding 0 6px 1px 6px
-      min-width 20px
-      height 20px
-      border-radius 20px
-      background-color $black-light
-      color $white
   .custom-fields-container
     display flex
     flex-direction column
