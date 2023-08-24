@@ -9,6 +9,7 @@
       :conditioner="conditioner"
       :useDismantling="useDismantling"
       :additionalServices="additionalServices"
+      :wallChasing="wallChasing"
       :customFields="customFields"/>
   </div>
 </template>

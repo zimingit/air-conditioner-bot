@@ -10,6 +10,7 @@
       <div class="total-details" v-show="showDetail">
         <TotalInstallation :conditioner="conditioner" :useDismantling="useDismantling"/>
         <TotalAdditionalServices :additionalServices="additionalServices" @change="setTotalServices"/>
+        <TotalWallChasing :wallChasing="wallChasing"  @change="setTotalWallChasing"/>
         <TotalCustomFields :customFields="customFields" @change="setTotalCustomFields"/>
       </div>
     </Accordion>
@@ -22,28 +23,35 @@ import FieldHeader from '../../UI/FieldHeader.vue'
 import TotalInstallation from './TotalInstallation.vue'
 import TotalCustomFields from './TotalCustomFields.vue'
 import TotalAdditionalServices from './TotalAdditionalServices.vue'
+import TotalWallChasing from './TotalWallChasing.vue'
 export default {
   props: {
     conditioner: Object,
     customFields: Array,
     additionalServices: Array,
+    wallChasing: Array,
     useDismantling: Boolean
   },
   data () {
     return {
       showDetail: false,
+      totalWallChasing: 0,
       totalServicesPrice: 0,
       totalCustomFieldsPrice: 0
     }
   },
   methods: {
+    getValueSumm (data = []) {
+      return data.reduce((acc, { value }) => acc + value, 0)
+    },
+    setTotalWallChasing (chasing) {
+      this.totalWallChasing = this.getValueSumm(chasing)
+    },
     setTotalServices (services) {
-      const price = (services || []).reduce((acc, { value }) => acc + value, 0)
-      this.totalServicesPrice = price
+      this.totalServicesPrice = this.getValueSumm(services)
     },
     setTotalCustomFields (fields) {
-      const price = (fields || []).reduce((acc, { value }) => acc + value, 0)
-      this.totalCustomFieldsPrice = price
+      this.totalCustomFieldsPrice = this.getValueSumm(fields)
     },
     toggleDetail () {
       this.showDetail = !this.showDetail
@@ -84,8 +92,9 @@ export default {
       const { price, area } = this.conditioner
       const { base, pipeLayingOrInstallation, indoorUnit, dismantling } = area
       const dismantlingPrice = this.useDismantling ? dismantling : 0
+      const otherServices = this.totalCustomFieldsPrice + this.totalServicesPrice + this.totalWallChasing
 
-      const totalPrice = price + base + pipeLayingOrInstallation + indoorUnit + dismantlingPrice + this.totalCustomFieldsPrice + this.totalServicesPrice
+      const totalPrice = price + base + pipeLayingOrInstallation + indoorUnit + dismantlingPrice + otherServices
       return `${totalPrice.toLocaleString()} ₽`
     }
   },
@@ -94,7 +103,8 @@ export default {
     FieldHeader,
     TotalInstallation,
     TotalCustomFields,
-    TotalAdditionalServices
+    TotalAdditionalServices,
+    TotalWallChasing
   }
 }
 </script>

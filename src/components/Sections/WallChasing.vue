@@ -57,17 +57,6 @@ export default {
     this.change()
   },
   methods: {
-    // setPrices () {
-    //   const materialKey = this.selectedMaterial.name
-    //   this.wallChasings.forEach(chasing => {
-    //     const key = chasing.name
-    //     let { price, prices } = chasing
-    //     if (prices) {
-    //       price = this.getSelectedOption(prices).price
-    //     }
-    //     this.values[key] = price[materialKey]
-    //   })
-    // },
     initValues () {
       this.wallChasings.forEach(chasing => {
         const key = chasing.name
