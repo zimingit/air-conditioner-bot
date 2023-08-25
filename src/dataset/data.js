@@ -108,6 +108,58 @@ const WALLCHASINGS = [
     { name: 'cableRoute',     label: 'Под кабель',   description: '', price: pricesByMaterialType }
 ]
 
+// Дополнительный проход стен
+const WALLTYPES = [
+    { name: 'small', label: 'До 7 см'},
+    { name: 'large', label: 'От 7 см'},
+]
+const holeFreonPricesByWallType = {
+    small: {
+        brick: 400,
+        beton: 600,
+        gasBlock: 400,
+        wood: 400
+    },
+    large: {
+        brick: 500,
+        beton: 1000,
+        gasBlock: 500,
+        wood: 500
+    }
+}
+const holeDrainageAndCableRoutePricesByWallType = {
+    small: {
+        brick: 300,
+        beton: 300,
+        gasBlock: 300,
+        wood: 300
+    },
+    large: {
+        brick: 350,
+        beton: 350,
+        gasBlock: 350,
+        wood: 350
+    }
+}
+const DIAMONDDRILLINGBYMATERIAL = {
+    brick: 2000,
+    beton: 4000,
+    gasBlock: 2000,
+    wood: 2000
+}
+
+const WALLHOLEMATERIALS = [
+    { name: 'brick',        label: 'Кирпич' },
+    { name: 'beton',        label: 'Бетон' },
+    { name: 'gasBlock',     label: 'Газоблок' },
+    { name: 'wood',         label: 'Дерево' }
+]
+const HOLETYPES = [
+    { name: 'freonRoute',     label: 'Под фреон',    description: '', prices: holeFreonPricesByWallType },
+    { name: 'drainageRoute',  label: 'Под дренаж',   description: '', prices: holeDrainageAndCableRoutePricesByWallType },
+    { name: 'cableRoute',     label: 'Под кабель',   description: '', prices: holeDrainageAndCableRoutePricesByWallType }
+]
+
 
 export {
     AREAS,
@@ -117,5 +169,9 @@ export {
     ADDITIONALSERVICES,
     ADDITIONALSERVICESEXTENDED,
     WALLMATERIALS,
-    WALLCHASINGS
+    WALLCHASINGS,
+    HOLETYPES,
+    WALLHOLEMATERIALS,
+    WALLTYPES,
+    DIAMONDDRILLINGBYMATERIAL
 }
