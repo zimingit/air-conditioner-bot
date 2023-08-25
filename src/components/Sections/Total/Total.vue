@@ -10,7 +10,8 @@
       <div class="total-details" v-show="showDetail">
         <TotalInstallation :conditioner="conditioner" :useDismantling="useDismantling"/>
         <TotalAdditionalServices :additionalServices="additionalServices" @change="setTotalServices"/>
-        <TotalWallChasing :wallChasingSections="wallChasingSections"  @change="setTotalWallChasing"/>
+        <TotalWallChasing :wallChasingSections="wallChasingSections" @change="setTotalWallChasing"/>
+        <TotalAdditionalHoles :additionalHoles="additionalHoles" @change="setTotalHoles"/>
         <TotalCustomFields :customFields="customFields" @change="setTotalCustomFields"/>
       </div>
     </Accordion>
@@ -24,17 +25,20 @@ import TotalInstallation from './TotalInstallation.vue'
 import TotalCustomFields from './TotalCustomFields.vue'
 import TotalAdditionalServices from './TotalAdditionalServices.vue'
 import TotalWallChasing from './TotalWallChasing.vue'
+import TotalAdditionalHoles from './TotalAdditionalHoles.vue'
 export default {
   props: {
     conditioner: Object,
     customFields: Array,
     additionalServices: Array,
     wallChasingSections: Array,
+    additionalHoles: Array,
     useDismantling: Boolean
   },
   data () {
     return {
       showDetail: false,
+      totalHoles: 0,
       totalWallChasing: 0,
       totalServicesPrice: 0,
       totalCustomFieldsPrice: 0
@@ -43,6 +47,9 @@ export default {
   methods: {
     getValueSumm (data = []) {
       return data.reduce((acc, { value }) => acc + value, 0)
+    },
+    setTotalHoles (holes) {
+      this.totalHoles = this.getValueSumm(holes)
     },
     setTotalWallChasing (chasing) {
       this.totalWallChasing = this.getValueSumm(chasing)
@@ -58,41 +65,11 @@ export default {
     }
   },
   computed: {
-    dismantling () {
-      const { dismantling } = this.conditioner.area
-      const label = 'Демонтаж кондиционера'
-      const value = `${dismantling.toLocaleString()} ₽`
-      return { label, value }
-    },
-    indoorUnit () {
-      const { indoorUnit } = this.conditioner.area
-      const label = 'Монтаж/демонтаж внутреннего блока'
-      const value = `${indoorUnit.toLocaleString()} ₽`
-      return { label, value }
-    },
-    pipeLayingOrInstallation () {
-      const { pipeLayingOrInstallation } = this.conditioner.area
-      const label = 'Закладка труб/монтаж на заложенную трассу'
-      const value = `${pipeLayingOrInstallation.toLocaleString()} ₽`
-      return { label, value }
-    },
-    installation () {
-      const { base } = this.conditioner.area
-      const label = 'Монтаж'
-      const value = `${base.toLocaleString()} ₽`
-      return { label, value }
-    },
-    conditionerDetail () {
-      const { model, manufacturer, price } = this.conditioner
-      const label = `Кондиционер ${manufacturer} ${model}`
-      const value = `${price.toLocaleString()} ₽`
-      return { label, value }
-    },
     total () {
       const { price, area } = this.conditioner
       const { base, pipeLayingOrInstallation, indoorUnit, dismantling } = area
       const dismantlingPrice = this.useDismantling ? dismantling : 0
-      const otherServices = this.totalCustomFieldsPrice + this.totalServicesPrice + this.totalWallChasing
+      const otherServices = this.totalCustomFieldsPrice + this.totalServicesPrice + this.totalWallChasing + this.totalHoles
 
       const totalPrice = price + base + pipeLayingOrInstallation + indoorUnit + dismantlingPrice + otherServices
       return `${totalPrice.toLocaleString()} ₽`
@@ -104,7 +81,8 @@ export default {
     TotalInstallation,
     TotalCustomFields,
     TotalAdditionalServices,
-    TotalWallChasing
+    TotalWallChasing,
+    TotalAdditionalHoles
   }
 }
 </script>

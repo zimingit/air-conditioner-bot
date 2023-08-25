@@ -6,12 +6,13 @@
     <WallChasing :freonCableChannel="freonCableChannel" @change="setWallChasing"/>
     <AdditionalHoles @change="setAdditionalHoles"/>
     <CustomFields @change="setCustom"/>
-    
+
     <Total v-if="conditioner"
       :conditioner="conditioner"
       :useDismantling="useDismantling"
       :additionalServices="additionalServices"
       :wallChasingSections="wallChasingSections"
+      :additionalHoles="additionalHoles"
       :customFields="customFields"/>
   </div>
 </template>

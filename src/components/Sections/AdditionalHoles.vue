@@ -106,11 +106,12 @@ export default {
       this.setMaterial(material)
       this.setWallType(wall)
       this.setHoleType(hole)
+      this.useDiamondDrill = false
     },
     addHole () {
       const { prices } = this.selectedHoleType
       const wall = this.selectedWallType.name
-      const material = this.selectedWallType.name
+      const material = this.selectedMaterial.name
       const diamondDrillPrice = DIAMONDDRILLINGBYMATERIAL[material]
       const holePrice = prices[wall][material]
 
