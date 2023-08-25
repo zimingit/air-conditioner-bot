@@ -7,7 +7,7 @@
 
     <Accordion>
       <ul v-if="showList" class="services-list">
-        <li v-for="service in services" :key="service.name">
+        <li v-for="service in servicesUseOnEdit" :key="service.name">
           <div class="services-widget">
             <div class="service-info">
               <p>{{service.label}} <b v-if="service?.widget?.unit">({{service?.widget?.unit}})</b></p>
@@ -24,7 +24,7 @@
               :value="values[service.name]"
               @switch="(value) => setFieldValue(service, value)"/>
           </div>
-          <ListField v-if="service.prices.length"
+          <ListField v-if="showPrices(service)"
             :data="service.prices"
             :selected="getSelectedOption(service.prices)"
             @change="(selected) => setSelectedOption(service.prices, selected)"/>
@@ -56,9 +56,31 @@ export default {
   },
   created () {
     this.init()
+    this.setPower()
     this.change()
   },
+  watch: {
+    conditioner () {
+      this.setPower()
+    }
+  },
   methods: {
+    setPower () {
+      const { conditioner } = this
+      if (!conditioner) return
+
+      const serviceKey = 'freonRouteExtension'
+      const { prices } = this.services.find(({ name }) => name === serviceKey)
+      const priceToSelect = prices.find(option => {
+        const { minPower, maxPower } = option
+        const { power } = conditioner
+        return power > minPower && power <= maxPower
+      })
+
+      if (priceToSelect) {
+        this.setSelectedOption(prices, priceToSelect)
+      }
+    },
     init () {
       const initialValuesMatrix = { 'number': 0, 'switcher': false }
       this.services = ADDITIONALSERVICESEXTENDED
@@ -97,9 +119,17 @@ export default {
         return { ...service, value }
       })
       this.$emit('change', data)
+    },
+    showPrices ({ prices, configEdit }) {
+      const hasPrices = prices.length > 0
+      const { useAutoOptionSelect = false } = configEdit
+      return hasPrices && !useAutoOptionSelect
     }
   },
   computed: {
+    servicesUseOnEdit () {
+      return this.services.filter(({ configEdit }) => configEdit.useOnEdit)
+    },
     filledValuesCount () {
       return Object.values(this.values).filter(value => value).length
     }

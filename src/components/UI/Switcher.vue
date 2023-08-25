@@ -32,6 +32,10 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+.field-header-extends
+  .button-switcher
+    margin-left auto
+
 .button-switcher
   display flex
   align-items center

@@ -30,13 +30,14 @@ export default {
     },
     // Стоимость удлинения трассы фреон
     getFreonRouteExtensionPrice (service) {
-      const { label } = service
+      const { label: serviceLabel } = service
       const routeLength = service.value
-      const { price } = this.getSelectedOption(service)
-      
+      const selectedOption = this.getSelectedOption(service)
+      const label = `${serviceLabel} (${selectedOption.label})`
+
       let value = null
       if (routeLength > 0) {
-        value = routeLength * price
+        value = routeLength * selectedOption.price
       }
       
       return { label, value }
@@ -93,11 +94,12 @@ export default {
     getFreonRefuelingPrice (service) {
       const { price } = service
       const label = `${service.label} (работа)`
-      const useRefueling = service.value
+      // const useRefueling = service.value
       const routeLength = this.getServiceByName('freonRouteExtension').value
 
       let value = null
-      if (routeLength > 7 && useRefueling) {
+      // if (routeLength > 7 && useRefueling) {
+      if (routeLength > 7) {
         value = price
       }
       return { label, value }

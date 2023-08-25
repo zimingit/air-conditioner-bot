@@ -32,7 +32,7 @@ const CONDITIONERS = [
     { model: 'SSH-P309BE', manufacturer: 'Shivaki', power: 8.8, price: 75910, type: 'xl' },
     { model: 'GRI/GRO-30HH2', manufacturer: 'GREEN', power: 8.5, price: 79049, type: 'xl' },
     { model: 'Nordic EACS-36HT', manufacturer: 'Electrolux', power: 9.5, price: 115990, type: 'xxl' },
-    { model: 'DA-36H', manufacturer: 'Dahatsu', power: 10, price: 109000, type: 'xxl' }
+    { model: 'DA-36H', manufacturer: 'Dahatsu', power: 11, price: 109000, type: 'xxl' }
 ]
 
 const CONDITIONERSEXTENDED = CONDITIONERS.map(conditioer => {
@@ -42,9 +42,9 @@ const CONDITIONERSEXTENDED = CONDITIONERS.map(conditioer => {
 
 // Доп.услуги
 const freonRouteExtension = [
-    { name: 's', label: 'До 5 кВт', price: 1000 },
-    { name: 'm', label: 'До 10 кВт', price: 1500 },
-    { name: 'l', label: 'Свыше 10 кВт', price: 2000 },
+    { name: 's', label: 'До 5 кВт', minPower: 0, maxPower: 5, price: 1000 },
+    { name: 'm', label: 'До 10 кВт', minPower: 5, maxPower: 10, price: 1500 },
+    { name: 'l', label: 'Свыше 10 кВт', minPower: 10, maxPower: 1000, price: 2000 },
 ]
 const cableСhannel = [
     { name: 'simple', label: 'ПВХ', price: 600 },
@@ -63,15 +63,18 @@ const ADDITIONALSERVICESWIDGETS = {
     freonRefueling: { name: 'switcher', params: {}, unit: '' },
     freon: { name: 'number', params: { step: 100 }, unit: 'гр' }
 }
-
+const configEdit = {
+    useOnEdit: true,
+    useAutoOptionSelect: false
+}
 const ADDITIONALSERVICES = [
-    { name: 'freonRouteExtension',      label: 'Удлинение трассы фреон',  description: '',                                    price: null,        prices: freonRouteExtension },
-    { name: 'electricalCable',          label: 'Электрический кабель',    description: '',                                    price: 170,         prices: [] },
-    { name: 'electricCableChannel',     label: 'Кабель-канал',            description: 'Под электрический кабель',            price: 170,         prices: [] },
-    { name: 'freonCableChannel',        label: 'Кабель-канал',            description: 'Под трассу фреон',                    price: null,        prices: cableСhannel },
-    { name: 'drainage',                 label: 'Дренаж ',                 description: 'Свыше 5 метров',                      price: 170,         prices: [] },       
-    { name: 'freonRefueling',           label: 'Дозаправка фреоном',      description: 'При длине трассы более 7 метров',     price: 1500,        prices: [] },
-    { name: 'freon',                    label: 'Фреон',                   description: 'При дозаправке считаем по 100 грамм', price: null,        prices: freon }
+    { name: 'freonRouteExtension',      label: 'Удлинение трассы фреон',  description: '',                                    price: null,        prices: freonRouteExtension, configEdit: { useOnEdit: true, useAutoOptionSelect: true }},
+    { name: 'electricalCable',          label: 'Электрический кабель',    description: '',                                    price: 170,         prices: [], configEdit },
+    { name: 'electricCableChannel',     label: 'Кабель-канал',            description: 'Под электрический кабель',            price: 170,         prices: [], configEdit },
+    { name: 'drainage',                 label: 'Дренаж ',                 description: '',                                    price: 170,         prices: [], configEdit },       
+    { name: 'freonCableChannel',        label: 'Кабель-канал',            description: 'Под трассу фреон',                    price: null,        prices: cableСhannel, configEdit },
+    { name: 'freonRefueling',           label: 'Дозаправка фреоном',      description: 'При длине трассы более 7 метров',     price: 1500,        prices: [], configEdit: { useOnEdit: false } },
+    { name: 'freon',                    label: 'Фреон',                   description: 'При дозаправке считаем по 100 грамм', price: null,        prices: freon, configEdit }
 ]
 
 const ADDITIONALSERVICESEXTENDED = ADDITIONALSERVICES.map(service => {
