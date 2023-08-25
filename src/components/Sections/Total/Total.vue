@@ -1,6 +1,6 @@
 <template>
   <section class="total-section">
-    <div class="total-button">Итого {{ total }}</div>
+    <!-- <div class="total-button">Итого {{ total }}</div> -->
 
     <FieldHeader v-if="conditioner" label="Детально" @click="toggleDetail">
       <Chevron :opened="showDetail"/>
@@ -37,12 +37,25 @@ export default {
   },
   data () {
     return {
-      showDetail: false,
+      showDetail: true,
       totalHoles: 0,
       totalWallChasing: 0,
       totalServicesPrice: 0,
       totalCustomFieldsPrice: 0
     }
+  },
+  watch: {
+    total (to) {
+      const text = `Итого ${to}`
+      Telegram.WebApp.MainButton.text = text
+    }
+  },
+  created () {
+    const text = `Итого ${this.total}`
+    Telegram.WebApp.MainButton.text = text
+    Telegram.WebApp.MainButton.onClick(() => {
+      Telegram.WebApp.sendData(this.total)
+    })
   },
   methods: {
     getValueSumm (data = []) {
@@ -91,17 +104,17 @@ export default {
 .total-section
   display flex
   flex-direction column
-  margin 50px 0
+  margin-bottom 50px
 
-  .total-button
-    margin 0 15px
-    border-radius 50px
-    padding 10px 30px
-    display flex
-    flex 1
-    justify-content center
-    background-color $black-light
-    color $white
-    font-weight 700
+  // .total-button
+  //   margin 0 15px
+  //   border-radius 50px
+  //   padding 10px 30px
+  //   display flex
+  //   flex 1
+  //   justify-content center
+  //   background-color $black-light
+  //   color $white
+  //   font-weight 700
 
 </style>

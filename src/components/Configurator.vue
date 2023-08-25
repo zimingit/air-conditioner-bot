@@ -55,6 +55,12 @@ export default {
     },
     setConditioner (conditioner) {
       this.conditioner = conditioner
+      const buttonConfig = {
+        color: '#303030',
+        textColor: '#ffffff'
+      }
+      Telegram.WebApp.MainButton.setParams(buttonConfig)
+      Telegram.WebApp.MainButton.show()
     },
     setUseDismantling (dismantling) {
       this.useDismantling = dismantling

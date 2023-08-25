@@ -11,8 +11,6 @@ export default {
   },
   created () {
   },
-  methods: {
-  },
   components: {
     Configurator
   }
