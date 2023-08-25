@@ -3,13 +3,13 @@
     <Conditioner :selected="conditioner" @change="setConditioner"/>
     <Dismantling :value="useDismantling" @change="setUseDismantling"/>
     <AdditionalServices :conditioner="conditioner" @change="setAdditionalServices"/>
-    <WallChasing @change="setWallChasing"/>
+    <WallChasing :freonCableChannel="freonCableChannel" @change="setWallChasing"/>
     <CustomFields @change="setCustom"/>
     <Total v-if="conditioner"
       :conditioner="conditioner"
       :useDismantling="useDismantling"
       :additionalServices="additionalServices"
-      :wallChasing="wallChasing"
+      :wallChasingSections="wallChasingSections"
       :customFields="customFields"/>
   </div>
 </template>
@@ -29,17 +29,15 @@ export default {
   data () {
     return {
       additionalServices: [],
-      wallChasing: [],
+      wallChasingSections: [],
       conditioner: null,
       useDismantling: false,
       customFields: []
     }
   },
-  created () {
-  },
   methods: {
-    setWallChasing (wallChasing) {
-      this.wallChasing = wallChasing
+    setWallChasing (wallChasingSections) {
+      this.wallChasingSections = wallChasingSections
     },
     setAdditionalServices (additionalServices) {
       this.additionalServices = additionalServices
@@ -52,6 +50,14 @@ export default {
     },
     setUseDismantling (dismantling) {
       this.useDismantling = dismantling
+    }
+  },
+  computed: {
+    freonCableChannel () {
+      const serviceKey = 'freonCableChannel'
+      const { prices = [] } = this.additionalServices.find(({ name }) => name === serviceKey) || {}
+      const optionSelected = prices.find(( {selected }) => selected) || prices[0]
+      return optionSelected
     }
   },
   components: {

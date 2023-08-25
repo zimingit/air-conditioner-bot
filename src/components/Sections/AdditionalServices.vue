@@ -65,6 +65,21 @@ export default {
     }
   },
   methods: {
+    init () {
+      const initialValuesMatrix = { 'number': 0, 'switcher': false }
+      this.services = ADDITIONALSERVICESEXTENDED
+        .map(service => {
+          // Инициализируем значения полей
+          const key = service.name
+          const widgetName = service?.widget?.name
+          this.values[key] = initialValuesMatrix[widgetName]
+
+          service.prices = service.prices.map((option, index) => {
+            return { ...option, selected: index === 0 }
+          })
+          return service
+        })
+    },
     setPower () {
       const { conditioner } = this
       if (!conditioner) return
@@ -80,21 +95,6 @@ export default {
       if (priceToSelect) {
         this.setSelectedOption(prices, priceToSelect)
       }
-    },
-    init () {
-      const initialValuesMatrix = { 'number': 0, 'switcher': false }
-      this.services = ADDITIONALSERVICESEXTENDED
-        .map(service => {
-          // Инициализируем значения полей
-          const key = service.name
-          const widgetName = service?.widget?.name
-          this.values[key] = initialValuesMatrix[widgetName]
-
-          service.prices = service.prices.map((option, index) => {
-            return { ...option, selected: index === 0 }
-          })
-          return service
-        })
     },
     getSelectedOption (options) {
       return options.find(option => option.selected)

@@ -10,7 +10,7 @@
       <div class="total-details" v-show="showDetail">
         <TotalInstallation :conditioner="conditioner" :useDismantling="useDismantling"/>
         <TotalAdditionalServices :additionalServices="additionalServices" @change="setTotalServices"/>
-        <TotalWallChasing :wallChasing="wallChasing"  @change="setTotalWallChasing"/>
+        <TotalWallChasing :wallChasingSections="wallChasingSections"  @change="setTotalWallChasing"/>
         <TotalCustomFields :customFields="customFields" @change="setTotalCustomFields"/>
       </div>
     </Accordion>
@@ -29,7 +29,7 @@ export default {
     conditioner: Object,
     customFields: Array,
     additionalServices: Array,
-    wallChasing: Array,
+    wallChasingSections: Array,
     useDismantling: Boolean
   },
   data () {

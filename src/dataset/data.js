@@ -84,7 +84,6 @@ const ADDITIONALSERVICESEXTENDED = ADDITIONALSERVICES.map(service => {
 })
 
 // Штробление стен
-
 const pricesByMaterialType = {
     brick: 720,
     beton: 960,
@@ -104,9 +103,9 @@ const WALLMATERIALS = [
     { name: 'wood',         label: 'Дерево' }
 ]
 const WALLCHASINGS = [
+    { name: 'freonRoute',     label: 'Под фреон',    description: '', prices: freonRouteChaisingPriceByCableType },
     { name: 'drainageRoute',  label: 'Под дренаж',   description: '', price: pricesByMaterialType },
-    { name: 'cableRoute',     label: 'Под кабель',   description: '', price: pricesByMaterialType },
-    { name: 'freonRoute',     label: 'Под фреон',    description: '', prices: freonRouteChaisingPriceByCableType }
+    { name: 'cableRoute',     label: 'Под кабель',   description: '', price: pricesByMaterialType }
 ]
 
 

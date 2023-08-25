@@ -42,6 +42,7 @@ export default {
     flex-shrink 0
     border-radius 20px
     background-color $grey-light
+    transition all .1s ease
     &.selected
       background-color $black-light
       color $white
