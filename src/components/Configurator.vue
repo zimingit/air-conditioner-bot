@@ -4,7 +4,9 @@
     <Dismantling :value="useDismantling" @change="setUseDismantling"/>
     <AdditionalServices :conditioner="conditioner" @change="setAdditionalServices"/>
     <WallChasing :freonCableChannel="freonCableChannel" @change="setWallChasing"/>
+    <AdditionalHoles @change="setAdditionalHoles"/>
     <CustomFields @change="setCustom"/>
+    
     <Total v-if="conditioner"
       :conditioner="conditioner"
       :useDismantling="useDismantling"
@@ -19,6 +21,7 @@ import Conditioner from './Sections/Conditioner.vue'
 import Dismantling from './Sections/Dismantling.vue'
 import AdditionalServices from './Sections/AdditionalServices.vue'
 import WallChasing from './Sections/WallChasing.vue'
+import AdditionalHoles from './Sections/AdditionalHoles.vue'
 import CustomFields from './Sections/CustomFields.vue'
 import Total from './Sections/Total/Total.vue'
 
@@ -28,6 +31,7 @@ export default {
   },
   data () {
     return {
+      additionalHoles: [],
       additionalServices: [],
       wallChasingSections: [],
       conditioner: null,
@@ -41,6 +45,9 @@ export default {
     },
     setAdditionalServices (additionalServices) {
       this.additionalServices = additionalServices
+    },
+    setAdditionalHoles (additionalHoles) {
+      this.additionalHoles = additionalHoles
     },
     setCustom (data) {
       this.customFields = data
@@ -66,6 +73,7 @@ export default {
     Dismantling,
     CustomFields,
     AdditionalServices,
+    AdditionalHoles,
     WallChasing
   }
 }

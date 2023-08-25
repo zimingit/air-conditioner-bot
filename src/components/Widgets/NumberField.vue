@@ -45,7 +45,7 @@ export default {
     },
     input (e) {
       const { value } = e.target
-      this.$emit('change', parseInt(value))
+      this.$emit('change', parseFloat(value))
     }
   },
   computed: {

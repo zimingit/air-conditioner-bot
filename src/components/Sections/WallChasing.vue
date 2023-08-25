@@ -154,8 +154,8 @@ export default {
         return { ...chasing, value }
       })
       this.sections.push({ material, chasings })
-      this.init()
       this.change()
+      this.init()
     },
     deleteSection (index) {
       this.sections.splice(index, 1)
