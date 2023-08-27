@@ -53,8 +53,10 @@ export default {
   created () {
     const text = `Итого ${this.total}`
     Telegram.WebApp.MainButton.text = text
-    Telegram.WebApp.MainButton.onClick(() => {
-      Telegram.WebApp.sendData(this.total)
+    const vm = this
+    Telegram.WebApp.MainButton.onClick(function() {
+      Telegram.WebApp.sendData(vm.total)
+      Telegram.WebApp.close()
     })
   },
   methods: {
