@@ -66,8 +66,11 @@ export default {
   methods: {
     async sendData () {
       const data = JSON.stringify(this.getTotal())
-      const url = 'http://194.67.113.27:8000/'
+      const url = 'https://194.67.113.27:8000/'
       const config = {
+        headers: {
+          'Content-Type': 'application/json'
+        },
         method: 'POST',
         body: data
       }
