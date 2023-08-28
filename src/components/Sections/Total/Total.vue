@@ -1,6 +1,6 @@
 <template>
   <section class="total-section">
-    <!-- <div class="total-button">Итого {{ total }}</div> -->
+    <div class="total-button" @click="sendData">Итого {{ total }}</div>
 
     <FieldHeader v-if="conditioner" label="Детально" @click="toggleDetail">
       <Chevron :opened="showDetail"/>
@@ -41,25 +41,69 @@ export default {
       totalHoles: 0,
       totalWallChasing: 0,
       totalServicesPrice: 0,
-      totalCustomFieldsPrice: 0
+      totalCustomFieldsPrice: 0,
+      // Для посчитанной детальной информации
+      services: [],
+      wallChasing: []
     }
   },
-  watch: {
-    total (to) {
-      const text = `Итого ${to}`
-      Telegram.WebApp.MainButton.text = text
-    }
-  },
-  created () {
-    const text = `Итого ${this.total}`
-    Telegram.WebApp.MainButton.text = text
-    const vm = this
-    Telegram.WebApp.MainButton.onClick(function() {
-      Telegram.WebApp.sendData(vm.total)
-      Telegram.WebApp.close()
-    })
-  },
+  // watch: {
+  //   total (to) {
+  //     const text = `Итого ${to}`
+  //     Telegram.WebApp.MainButton.text = text
+  //   }
+  // },
+  // created () {
+  //   const text = `Итого ${this.total}`
+  //   Telegram.WebApp.MainButton.text = text
+
+  //   const vm = this
+  //   Telegram.WebApp.MainButton.onClick(function() {
+  //     Telegram.WebApp.sendData(vm.total)
+  //     Telegram.WebApp.close()
+  //   })
+  // },
   methods: {
+    async sendData () {
+      const data = JSON.stringify(this.getTotal())
+      const url = '/getOffer'
+      const config = {
+        method: 'POST',
+        body: data
+      }
+      fetch(url, config)
+        .then(response => response.json())
+        .then(response => {
+          console.log('Result data:', data)
+          console.log(response)
+        })
+    },
+    getTotal () {
+      const { 
+        conditioner,
+        services,
+        additionalServices: servicesDetails,
+        wallChasingSections: wallChasingDetails,
+        wallChasing,
+        additionalHoles,
+        useDismantling,
+        customFields
+      } = this
+
+      const result = {
+        details: {
+          servicesDetails,
+          wallChasingDetails
+        },
+        conditioner,
+        services,
+        wallChasing,
+        additionalHoles,
+        useDismantling,
+        customFields
+      }
+      return result
+    },
     getValueSumm (data = []) {
       return data.reduce((acc, { value }) => acc + value, 0)
     },
@@ -67,9 +111,11 @@ export default {
       this.totalHoles = this.getValueSumm(holes)
     },
     setTotalWallChasing (chasing) {
+      this.wallChasing =chasing
       this.totalWallChasing = this.getValueSumm(chasing)
     },
     setTotalServices (services) {
+      this.services = services
       this.totalServicesPrice = this.getValueSumm(services)
     },
     setTotalCustomFields (fields) {
@@ -108,15 +154,15 @@ export default {
   flex-direction column
   margin-bottom 50px
 
-  // .total-button
-  //   margin 0 15px
-  //   border-radius 50px
-  //   padding 10px 30px
-  //   display flex
-  //   flex 1
-  //   justify-content center
-  //   background-color $black-light
-  //   color $white
-  //   font-weight 700
+  .total-button
+    margin 0 15px
+    border-radius 50px
+    padding 10px 30px
+    display flex
+    flex 1
+    justify-content center
+    background-color $black-light
+    color $white
+    font-weight 700
 
 </style>
