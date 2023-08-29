@@ -66,7 +66,7 @@ export default {
   methods: {
     async sendData () {
       const data = JSON.stringify(this.getTotal())
-      const url = 'http://194.67.113.27:8000/add_offer'
+      const url = 'add_offer'
       const config = {
         headers: {
           'Content-Type': 'application/json'
