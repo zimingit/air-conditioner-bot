@@ -19,6 +19,11 @@ export default defineConfig({
     }
   },
   server: {
-    port: 3000
+    port: 3000,
+    proxy: {
+      '/add_offer': {
+        target: 'http://localhost:8000',
+      }
+    }
   }
 })
