@@ -14,13 +14,7 @@
       <TotalWallChasing :wallChasingSections="wallChasingSections" @change="setTotalWallChasing"/>
       <TotalAdditionalHoles :additionalHoles="additionalHoles" @change="setTotalHoles"/>
       <TotalCustomFields :customFields="customFields" @change="setTotalCustomFields"/>
-      <section class="total">
-        <ul>
-          <li>
-            <p>Итого</p> <span>{{ total }}</span>
-          </li>
-        </ul>
-      </section>
+      <TotalPrice :price="total"/>
     </div>
   </div>
   
@@ -34,6 +28,7 @@ import TotalCustomFields from './Sections/Total/TotalCustomFields.vue'
 import TotalAdditionalServices from './Sections/Total/TotalAdditionalServices.vue'
 import TotalWallChasing from './Sections/Total/TotalWallChasing.vue'
 import TotalAdditionalHoles from './Sections/Total/TotalAdditionalHoles.vue'
+import TotalPrice from './Sections/Total/TotalPrice.vue'
 export default {
   emits: ['close'],
   props: {
@@ -103,7 +98,8 @@ export default {
     TotalCustomFields,
     TotalAdditionalServices,
     TotalWallChasing,
-    TotalAdditionalHoles
+    TotalAdditionalHoles,
+    TotalPrice
   }
 }
 </script>
@@ -151,19 +147,4 @@ export default {
     display flex
     flex-direction column
     gap 5px
-  .total
-    ul
-      display: flex;
-      flex-direction: column;
-      color: #303030;
-      font-size: 0.8em;
-      li
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 20px;
-        padding: 8px 20px;
-        span
-          font-weight: 500;
-          flex-shrink: 0;
 </style>
