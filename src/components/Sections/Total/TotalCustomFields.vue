@@ -3,7 +3,7 @@
     <h5>Дополнительная номенклатура</h5>
     <ul>
       <li v-for="{ label, value } in customFields" :key="label">
-        {{label}}
+        <p>{{label}}</p>
         <span>{{value.toLocaleString()}} ₽</span>
       </li>
     </ul>

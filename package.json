@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "html-to-pdf-js": "^0.9.3",
     "vue": "^3.3.4"
   },
   "devDependencies": {

@@ -2,11 +2,11 @@
   <section>
     <h5>Монтаж</h5>
     <ul>
-      <li>{{conditionerDetail.label}} <span>{{conditionerDetail.value}}</span></li>
-      <li>{{installation.label}} <span>{{installation.value}}</span></li>
-      <li>{{pipeLayingOrInstallation.label}} <span>{{pipeLayingOrInstallation.value}}</span></li>
-      <li>{{indoorUnit.label}} <span>{{indoorUnit.value}}</span></li>
-      <li v-if="useDismantling">{{dismantling.label}} <span>{{dismantling.value}}</span></li>
+      <li><p>{{conditionerDetail.label}}</p> <span>{{conditionerDetail.value}}</span></li>
+      <li><p>{{installation.label}}</p> <span>{{installation.value}}</span></li>
+      <li><p>{{pipeLayingOrInstallation.label}}</p> <span>{{pipeLayingOrInstallation.value}}</span></li>
+      <li><p>{{indoorUnit.label}}</p> <span>{{indoorUnit.value}}</span></li>
+      <li v-if="useDismantling"><p>{{dismantling.label}}</p> <span>{{dismantling.value}}</span></li>
     </ul>
   </section>
 </template>

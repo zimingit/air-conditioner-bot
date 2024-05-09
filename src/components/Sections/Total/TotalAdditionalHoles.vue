@@ -4,7 +4,7 @@
     <ul>
       <li v-for="{ label, value, type, useDiamondDrill } in additionalHolesPrices" :key="label">
         <div class="row-header">
-          {{label}}
+          <p>{{label}}</p>
           <span>{{value.toLocaleString()}} ₽</span>
         </div>
         <div class="row-details">

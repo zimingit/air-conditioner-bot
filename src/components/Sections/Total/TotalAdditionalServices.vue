@@ -3,7 +3,7 @@
     <h5>Дополнительные услуги</h5>
     <ul>
       <li v-for="{ label, value } in servicesPrice" :key="label">
-        {{label}}
+        <p>{{label}}</p>
         <span>{{value.toLocaleString()}} ₽</span>
       </li>
     </ul>

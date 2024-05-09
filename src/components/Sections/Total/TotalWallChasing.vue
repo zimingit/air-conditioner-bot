@@ -4,7 +4,7 @@
     <ul>
       <li v-for="{ label, value, details } in wallChasingPricesBySection" :key="label">
         <div class="row-header">
-          {{label}}
+          <p>{{label}}</p>
           <span>{{value.toLocaleString()}} ₽</span>
         </div>
         <div class="row-details" v-for="detail in details" :key="detail.label">

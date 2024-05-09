@@ -13,7 +13,8 @@
       :additionalServices="additionalServices"
       :wallChasingSections="wallChasingSections"
       :additionalHoles="additionalHoles"
-      :customFields="customFields"/>
+      :customFields="customFields"
+      @preview="preview"/>
   </div>
 </template>
 
@@ -27,6 +28,7 @@ import CustomFields from './Sections/CustomFields.vue'
 import Total from './Sections/Total/Total.vue'
 
 export default {
+  emits: ['preview'],
   props: {
     data: Array
   },
@@ -41,6 +43,11 @@ export default {
     }
   },
   methods: {
+    preview () {
+      const { additionalHoles, additionalServices, wallChasingSections, conditioner, useDismantling, customFields} = this
+      const data = { additionalHoles, additionalServices, wallChasingSections, conditioner, useDismantling, customFields }
+      this.$emit('preview', data)
+    },
     setWallChasing (wallChasingSections) {
       this.wallChasingSections = wallChasingSections
     },

@@ -27,6 +27,7 @@ import TotalAdditionalServices from './TotalAdditionalServices.vue'
 import TotalWallChasing from './TotalWallChasing.vue'
 import TotalAdditionalHoles from './TotalAdditionalHoles.vue'
 export default {
+  emits: ['preview'],
   props: {
     conditioner: Object,
     customFields: Array,
@@ -65,21 +66,22 @@ export default {
   // },
   methods: {
     async sendData () {
-      const data = JSON.stringify(this.getTotal())
-      const url = 'add_offer'
-      const config = {
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        method: 'POST',
-        body: data
-      }
-      fetch(url, config)
-        .then(response => response.json())
-        .then(response => {
-          console.log('Result data:', data)
-          console.log(response)
-        })
+      this.$emit('preview')
+      // const data = JSON.stringify(this.getTotal())
+      // const url = 'add_offer'
+      // const config = {
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   },
+      //   method: 'POST',
+      //   body: data
+      // }
+      // fetch(url, config)
+      //   .then(response => response.json())
+      //   .then(response => {
+      //     console.log('Result data:', data)
+      //     console.log(response)
+      //   })
     },
     getTotal () {
       const { 
