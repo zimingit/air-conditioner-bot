@@ -2,6 +2,8 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
 
+const localProxy = 'http://localhost:8080'
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue()],
@@ -21,8 +23,8 @@ export default defineConfig({
   server: {
     port: 3000,
     proxy: {
-      '/add_offer': {
-        target: 'http://0.0.0.0:8000',
+      '/api': {
+        target: localProxy,
       }
     }
   }

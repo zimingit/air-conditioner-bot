@@ -6,7 +6,7 @@
     </div>
     <div class="actions">
       <div class="save" @click="print">Скачать</div>
-      <div class="send">Отправить</div>
+      <div class="send" @click="send">Отправить</div>
     </div>
     <div class="print-section" ref="print">
       <TotalInstallation :conditioner="conditioner" :useDismantling="useDismantling"/>
@@ -51,6 +51,38 @@ export default {
     }
   },
   methods: {
+    send () {
+      const node = this.$refs.print
+      const options = {
+        margin:       10,
+        filename:     'offer.pdf',
+        html2canvas:  { scale: 2 }
+      }
+      html2pdf().set(options).from(node).toPdf().output('datauristring')
+        .then(pdfAsString => {
+          const [type, base64Data] = pdfAsString.split(',')
+          const url = 'api/addoffer'
+          const data = JSON.stringify({
+            user: Telegram.WebApp.initDataUnsafe.user || {},
+            type,
+            filename: 'offer.pdf',
+            base64: base64Data
+          })
+          const config = {
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: data
+          }
+          fetch(url, config)
+          .then(response => response.json())
+          .then(response => {
+            console.log('Result data:', data)
+            console.log(response)
+          })
+        })
+    },
     print () {
       const node = this.$refs.print
       const options = {
@@ -67,7 +99,7 @@ export default {
       this.totalHoles = this.getValueSumm(holes)
     },
     setTotalWallChasing (chasing) {
-      // this.wallChasing =chasing
+      // this.wallChasing = chasing
       this.totalWallChasing = this.getValueSumm(chasing)
     },
     setTotalServices (services) {
