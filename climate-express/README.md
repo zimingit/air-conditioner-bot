@@ -12,5 +12,3 @@ npm run serve
 # install dependencies
 npm install
 ```
-
-## New
