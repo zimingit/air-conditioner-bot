@@ -1,0 +1,16 @@
+{
+    "name": "climate-express",
+    "private": true,
+    "version": "1.0.0",
+    "type": "module",
+    "scripts": {
+        "initapp": "npm install & npm run serve",
+        "serve": "node index.js"
+    },
+    "dependencies": {
+        "express": "^4.19.2",
+        "node-telegram-bot-api": "^0.65.1"
+    },
+    "devDependencies": {
+    }
+}
