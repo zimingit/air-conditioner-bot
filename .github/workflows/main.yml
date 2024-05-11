@@ -47,4 +47,4 @@ jobs:
           sudo docker pull ${{ secrets.DOCKER_USERNAME }}/climate-bot
           #остановка всех контейнеров
           sudo docker stop $(sudo docker ps -a -q)
-          sudo docker run --rm -d -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/climate-bot -e TELEGRAMTOKEN=${{ secrets.TELEGRAM_TOKEN }}
+          sudo docker run --restart=always -d -e TELEGRAMTOKEN=${{ secrets.TELEGRAM_TOKEN }} -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/climate-bot
