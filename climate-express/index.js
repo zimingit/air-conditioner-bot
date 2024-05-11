@@ -15,7 +15,7 @@ const __dirname = dirname(__filename)
 const app = express()
 
 // Указываем путь к фронту
-const assetsPath = __dirname + '/dist/'
+const assetsPath = __dirname + '/view/'
 
 app.use(AddOffer)
 app.use(express.static(assetsPath))
