@@ -38,7 +38,7 @@ export default {
   },
   data () {
     return {
-      showDetail: true,
+      showDetail: false,
       totalHoles: 0,
       totalWallChasing: 0,
       totalServicesPrice: 0,

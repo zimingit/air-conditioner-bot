@@ -5,8 +5,8 @@
 
 <script>
 
-import Configurator from './components/Configurator.vue'
-import Preview from './components/Preview.vue'
+import Configurator from './views/Configurator.vue'
+import Preview from './views/Preview.vue'
 export default {
   data () {
     return {

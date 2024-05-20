@@ -19,13 +19,13 @@
 </template>
 
 <script>
-import Conditioner from './Sections/Conditioner.vue'
-import Dismantling from './Sections/Dismantling.vue'
-import AdditionalServices from './Sections/AdditionalServices.vue'
-import WallChasing from './Sections/WallChasing.vue'
-import AdditionalHoles from './Sections/AdditionalHoles.vue'
-import CustomFields from './Sections/CustomFields.vue'
-import Total from './Sections/Total/Total.vue'
+import Conditioner from '../components/Sections/Conditioner.vue'
+import Dismantling from '../components/Sections/Dismantling.vue'
+import AdditionalServices from '../components/Sections/AdditionalServices.vue'
+import WallChasing from '../components/Sections/WallChasing.vue'
+import AdditionalHoles from '../components/Sections/AdditionalHoles.vue'
+import CustomFields from '../components/Sections/CustomFields.vue'
+import Total from '../components/Sections/Total/Total.vue'
 
 export default {
   emits: ['preview'],
